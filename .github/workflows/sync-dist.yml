@@ -1,0 +1,49 @@
+name: Rebuild static dist/
+
+# Keeps the committed dist/ folder (what Vercel's zero-build-step import
+# serves) in sync with the PHP source, automatically. Runs on every push
+# to main that touches source files, rebuilds with build-static.php, and
+# commits the refreshed dist/ back to main if anything changed.
+#
+# paths-ignore on dist/** stops this workflow's own commit from
+# retriggering itself.
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'dist/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-dist
+  cancel-in-progress: true
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - run: php build-static.php
+
+      - name: Commit updated dist/ if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist
+          if git diff --cached --quiet; then
+            echo "dist/ unchanged, nothing to commit."
+          else
+            git commit -m "chore: rebuild dist/ [skip ci]"
+            git push origin HEAD:main
+          fi
