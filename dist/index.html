@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en" class="no-intro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SC&amp;IS Silver Jubilee Symposium · JNU · 27–28 Nov 2026</title>
+<meta name="description" content="Computational and Integrative Biology Across Scales — 25 years of the School of Computational and Integrative Sciences, JNU. 27–28 November 2026.">
+<meta name="theme-color" content="#02080d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2302080d' stroke='%235fe3f0' stroke-width='2'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='13' font-weight='700' fill='%235fe3f0' font-family='sans-serif'%3E25%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"./assets/js/vendor/three/three.module.js","three/addons/":"./assets/js/vendor/three/addons/"}}</script>
+<link rel="modulepreload" href="./assets/js/vendor/three/three.module.js">
+<link rel="modulepreload" href="assets/js/gl/stage.js?v=1794330405">
+<link rel="stylesheet" href="assets/css/site.css?v=1794331891">
+</head>
+<body>
+<div class="loader" id="loader" aria-hidden="true"><svg viewBox="0 0 80 80" width="84" height="84"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(95,227,240,.16)" stroke-width="2"/><circle class="loader-arc" cx="40" cy="40" r="34" fill="none" stroke="#5fe3f0" stroke-width="2" stroke-linecap="round" stroke-dasharray="60 154"/><text x="40" y="49" text-anchor="middle" font-size="26" font-weight="700" fill="#eaf8fb" font-family="Space Grotesk, sans-serif">25</text></svg><p>SC&amp;IS · JNU</p></div>
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="scrollbar" aria-hidden="true"><i></i></div>
+<nav class="rail" id="rail" aria-label="Page sections"></nav>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="SC&amp;IS Silver Jubilee — top">
+    <img class="brand-jnu" src="assets/img/jnu-logo.png" alt="Jawaharlal Nehru University" width="447" height="447">
+    <span>SC&amp;IS <b>25 Years</b></span>
+  </a>
+
+  <div class="nav-pill">
+    <nav class="links" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#glance">Details</a>
+      <a href="#programme">Programme</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
+    <a class="btn primary sm" href="#register"><span>Register</span></a>
+  </div>
+
+  <img class="gov-strip idbar-gov" src="assets/img/campaigns.jpg" alt="Atmanirbhar Bharat Abhiyan · Developed India Mission 2047 · Viksit Bharat Abhiyan 1947 to 2047" width="959" height="256">
+</header>
+<main id="top">
+<section class="hero" id="hero" data-scene="0">
+  <div class="hero-inner">
+    <p class="kicker" data-reveal>
+      <span class="dot"></span> Silver Jubilee Symposium · JNU, New Delhi
+    </p>
+    <h1 aria-label="25 Years — School of Computational and Integrative Sciences">
+      <span class="h-25"><b data-split>25</b><i data-split>Years</i></span>
+      <span class="h-school" data-split>School of Computational &amp; Integrative Sciences</span>
+    </h1>
+    <p class="lede" data-reveal style="--d:.5s">
+      Computational and Integrative Biology Across Scales    </p>
+
+    <div class="chips" data-reveal style="--d:.65s">
+      <span class="chip"><i class="ico ico-cal"></i> 27 – 28 November 2026</span>
+      <span class="chip"><i class="ico ico-pin"></i> JNU, New Delhi</span>
+      <span class="chip"><i class="ico ico-spark"></i> Silver Jubilee Symposium</span>
+    </div>
+
+    <div class="cta" data-reveal style="--d:.8s">
+      <a class="btn primary" href="#programme"><span>Explore the programme</span><i class="arrow"></i></a>
+      <a class="btn" href="#register"><span>Register — free for SC&amp;IS</span><i class="arrow"></i></a>
+      <a class="btn ghost" href="#glance" data-fx="radar"><span>When &amp; where</span></a>
+    </div>
+
+    <div class="countdown" id="countdown" data-reveal style="--d:.95s" aria-live="off">
+      <div><b data-u="d">00</b><small>days</small></div>
+      <div><b data-u="h">00</b><small>hours</small></div>
+      <div><b data-u="m">00</b><small>min</small></div>
+      <div><b data-u="s">00</b><small>sec</small></div>
+      <p>until the opening session</p>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#about" aria-label="Scroll to explore"><i></i><span>Scroll to dive in</span></a>
+</section>
+<section class="section about" id="about" data-scene="1">
+  <div class="wrap narrow-left">
+    <p class="eyebrow" data-reveal>01 · The code of life</p>
+    <h2 class="big" data-split>Twenty-five years of making biology computable.</h2>
+    <p class="body" data-reveal>
+      The School of Computational and Integrative Sciences began as the School of Information Technology.
+      From that first idea it has pushed a quantitative, interdisciplinary way of looking at living systems.
+      This symposium looks back at how the field evolved — and ahead to what comes next.
+    </p>
+    <p class="body" data-reveal style="--d:.1s">
+      Over two days, scientists, early-career researchers, students and alumni will explore how computation,
+      theory and experiment together deepen our understanding of life: invited lectures, student talks,
+      posters, alumni interaction and plenty of informal conversation.
+    </p>
+    <div class="stats" data-reveal data-px=".05" style="--d:.15s">
+      <div class="stat glass" data-tilt><b data-count="25">0</b><span>years of SC&amp;IS</span></div>
+      <div class="stat glass" data-tilt><b data-count="7">0</b><span>scientific sessions</span></div>
+      <div class="stat glass" data-tilt><b data-count="27">0</b><span>talks</span></div>
+      <div class="stat glass" data-tilt><b data-count="2">0</b><span>days</span></div>
+    </div>
+  </div>
+</section>
+<section class="section glance" id="glance" data-scene="2">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>At a glance</p>
+    <h2 class="big" data-split>What, when, where, who.</h2>
+
+    <div class="tabs" data-tabs>
+      <div class="tablist" role="tablist" aria-label="Event details" data-reveal>
+        <button class="btn tab on" role="tab" aria-selected="true"  data-tab="what" ><span>What</span></button>
+        <button class="btn tab"    role="tab" aria-selected="false" data-tab="when"  ><span>When</span></button>
+        <button class="btn tab"    role="tab" aria-selected="false" data-tab="where"><span>Where</span></button>
+        <button class="btn tab"    role="tab" aria-selected="false" data-tab="who"   ><span>Who</span></button>
+        <button class="btn tab"    role="tab" aria-selected="false" data-tab="fees" ><span>Register</span></button>
+      </div>
+
+      <div class="panels glass">
+        <div class="panel on" data-panel="what">
+          <div class="panel-ico" data-specimen="what" aria-hidden="true"></div>
+          <div>
+            <h3>Computational and Integrative Biology Across Scales</h3>
+            <p>A two-day scientific celebration of 25 years of the School of Computational and Integrative Sciences — invited lectures, student talks, poster sessions, alumni interaction and informal discussion, designed to foster exchange, mentorship and new collaborations.</p>
+            <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU.</p>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="when">
+          <div class="panel-ico" data-specimen="when" aria-hidden="true"></div>
+          <div>
+            <h3>Fri 27 &amp; Sat 28 November 2026</h3>
+            <p>Day 1 opens at 09:00 with registration and inaugural remarks and closes with posters and a gala dinner. Day 2 runs 09:30 – 16:30 and ends with the valedictory session and poster awards.</p>
+            <ul class="facts">
+              <li><b>15 Nov</b><span>Abstract submission deadline</span></li>
+              <li><b>20 Nov</b><span>Registration deadline</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="where">
+          <a class="panel-ico map-globe" data-specimen="where" href="https://www.google.com/maps/search/?api=1&amp;query=School%20of%20Computational%20and%20Integrative%20Sciences%2C%20Jawaharlal%20Nehru%20University%2C%20New%20Delhi%20110067" target="_blank" rel="noopener" aria-label="Open SC&amp;IS, JNU in Google Maps">
+            <span class="map-globe-hint">Open in Maps<svg class="map-arrow" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <div>
+            <h3>Jawaharlal Nehru University, New Delhi</h3>
+            <ul class="facts wide">
+              <li><b>Day 1 &amp; 2 — sessions</b><span>SAA Auditorium, JNU<br>Registration, talks, tea &amp; lunch</span></li>
+              <li><b>Day 1 evening</b><span>SC&amp;IS<br>Poster session &amp; gala dinner</span></li>
+            </ul>
+            <a class="loc-pin" href="https://www.google.com/maps/search/?api=1&amp;query=School%20of%20Computational%20and%20Integrative%20Sciences%2C%20Jawaharlal%20Nehru%20University%2C%20New%20Delhi%20110067" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
+              School of Computational &amp; Integrative Sciences, JNU, New Delhi&nbsp;110067
+            </a>
+          </div>
+        </div>
+
+        <div class="panel panel-who" data-panel="who">
+          <div>
+            <h3>The people behind it</h3>
+            <div class="who">
+                            <figure class="who-p">
+                                <img class="person-ph" src="assets/img/chief-patron.jpg" alt="Prof. Shantishree Dhulipudi Pandit" width="160" height="160" loading="lazy" decoding="async">
+                                <figcaption><small>Chief Patron</small><b>Prof. Shantishree Dhulipudi Pandit</b><span>Vice-Chancellor, JNU</span></figcaption>
+              </figure>
+                            <figure class="who-p">
+                                <img class="person-ph" src="assets/img/patron.jpg" alt="Prof. R. K. Brojen Singh" width="160" height="160" loading="lazy" decoding="async">
+                                <figcaption><small>Patron</small><b>Prof. R. K. Brojen Singh</b><span>Dean, SC&amp;IS, JNU</span></figcaption>
+              </figure>
+                            <figure class="who-p">
+                                <img class="person-ph" src="assets/img/convenor.jpg" alt="Ragothaman Yennamalli" width="160" height="160" loading="lazy" decoding="async">
+                                <figcaption><small>Convenor</small><b>Ragothaman Yennamalli</b><span>SC&amp;IS, JNU</span></figcaption>
+              </figure>
+                            <figure class="who-p">
+                                <img class="person-ph" src="assets/img/co-convenor.jpg" alt="Arnab Bhattacharjee" width="160" height="160" loading="lazy" decoding="async">
+                                <figcaption><small>Co-convenor</small><b>Arnab Bhattacharjee</b><span>SC&amp;IS, JNU</span></figcaption>
+              </figure>
+                          </div>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="fees">
+          <div class="panel-ico" data-specimen="fees" aria-hidden="true"></div>
+          <div>
+            <h3>Free for SC&amp;IS students &amp; faculty</h3>
+            <ul class="facts wide">
+              <li><b>SC&amp;IS</b><span>Students &amp; faculty — free</span></li>
+              <li><b>₹ 1000</b><span>Non-SC&amp;IS students</span></li>
+              <li><b>₹ 2000</b><span>Non-SC&amp;IS faculty / others</span></li>
+            </ul>
+            <a class="btn primary" href="https://tinyurl.com/scis25jnu" target="_blank" rel="noopener"><span>Register now</span><i class="arrow"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section programme" id="programme" data-scene="3">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Programme</p>
+    <h2 class="big" data-split>Two days. Seven sessions.</h2>
+    <p class="body" data-reveal>Choose a session — a model of the science unfolds, and the talks emerge from it.</p>
+
+    <div class="daytabs" role="tablist" aria-label="Day" data-reveal>
+              <button class="btn tab daytab on" role="tab" aria-selected="true" data-day="day1">
+          <span><b>Day 1</b> · 27 Nov</span>
+        </button>
+              <button class="btn tab daytab" role="tab" aria-selected="false" data-day="day2">
+          <span><b>Day 2</b> · 28 Nov</span>
+        </button>
+          </div>
+
+          <div class="day on" data-dayview="day1">
+        <p class="day-head"><b>Friday, 27 November 2026</b> <span>SAA Auditorium, JNU</span></p>
+        <ol class="timeline">
+                                    <li class="tl event" style="--i:0" data-reveal>
+                <time>09:00 – 09:50</time>
+                <div class="evt">
+                  <i class="eico e-welcome" aria-hidden="true"></i>
+                  <div><b>Registration, welcome &amp; inaugural remarks</b>
+                    <small>SAA Auditorium, JNU</small>                  </div>
+                </div>
+              </li>
+                                                <li class="tl sess" style="--i:1;--h:175" data-reveal>
+                <time>09:50 – 11:20</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s1" data-tilt aria-label="Open Session 1 — Omics Science">
+                  <span class="s-no">Session 1</span>
+                  <strong>Omics Science</strong>
+                  <span class="s-meta">Chairs · Dr. Pallavi &amp; Dr. Chari</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:175" data-open="s1" data-talk="0" aria-label="Dr. Nagaraj Balasubramanian — open abstract">NB</button><button type="button" class="spk-chip" style="--h:175" data-open="s1" data-talk="1" aria-label="Dr. Debojyoti Chakraborty — open abstract">DC</button><button type="button" class="spk-chip" style="--h:175" data-open="s1" data-talk="2" aria-label="Dr. Sumeet Pal Singh — open abstract">SS</button>                    <em>3 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:2" data-reveal>
+                <time>11:20 – 11:50</time>
+                <div class="evt">
+                  <i class="eico e-tea" aria-hidden="true"></i>
+                  <div><b>Tea / Coffee break</b>
+                                      </div>
+                </div>
+              </li>
+                                                <li class="tl sess" style="--i:3;--h:22" data-reveal>
+                <time>11:50 – 13:20</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s2" data-tilt aria-label="Open Session 2 — Structural Biology and Drug Discovery">
+                  <span class="s-no">Session 2</span>
+                  <strong>Structural Biology and Drug Discovery</strong>
+                  <span class="s-meta">Chairs · Dr. Raghu &amp; Dr. Andrew</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:22" data-open="s2" data-talk="0" aria-label="Dr. Aditya Padhi — open abstract">AP</button><button type="button" class="spk-chip" style="--h:22" data-open="s2" data-talk="1" aria-label="Dr. Sourav Chatterjee — open abstract">SC</button><button type="button" class="spk-chip" style="--h:22" data-open="s2" data-talk="2" aria-label="Dr. Manish Kumar — open abstract">MK</button><button type="button" class="spk-chip" style="--h:22" data-open="s2" data-talk="3" aria-label="Dr. Sabeeha Hasnain — open abstract">SH</button>                    <em>4 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:4" data-reveal>
+                <time>13:20 – 14:20</time>
+                <div class="evt">
+                  <i class="eico e-lunch" aria-hidden="true"></i>
+                  <div><b>Lunch</b>
+                    <small>SAA Auditorium, JNU</small>                  </div>
+                </div>
+              </li>
+                                                <li class="tl sess" style="--i:5;--h:268" data-reveal>
+                <time>14:20 – 15:50</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s3" data-tilt aria-label="Open Session 3 — Mathematical Biology and Statistical Modelling">
+                  <span class="s-no">Session 3</span>
+                  <strong>Mathematical Biology and Statistical Modelling</strong>
+                  <span class="s-meta">Chairs · Dr. Sapna, Dr. Mathur &amp; Dr. Narendar</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:268" data-open="s3" data-talk="0" aria-label="Dr. Rashmi Bhardwaj — open abstract">RB</button><button type="button" class="spk-chip" style="--h:268" data-open="s3" data-talk="1" aria-label="Dr. Manish Dev Shrimali — open abstract">MS</button><button type="button" class="spk-chip" style="--h:268" data-open="s3" data-talk="2" aria-label="Dr. Kuldeep Singh Yadav — open abstract">KY</button><button type="button" class="spk-chip" style="--h:268" data-open="s3" data-talk="3" aria-label="Dr. Rahul Gupta — open abstract">RG</button>                    <em>4 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:6" data-reveal>
+                <time>15:50 – 16:20</time>
+                <div class="evt">
+                  <i class="eico e-tea" aria-hidden="true"></i>
+                  <div><b>Tea / Coffee break</b>
+                                      </div>
+                </div>
+              </li>
+                                                <li class="tl sess" style="--i:7;--h:198" data-reveal>
+                <time>16:20 – 18:05</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s4" data-tilt aria-label="Open Session 4 — Artificial Intelligence in Computational Biology">
+                  <span class="s-no">Session 4</span>
+                  <strong>Artificial Intelligence in Computational Biology</strong>
+                  <span class="s-meta">Chairs · Dr. Shandar, Dr. Rakesh &amp; Dr. Jyoti</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:198" data-open="s4" data-talk="0" aria-label="Dr. Vivek Tiwari — open abstract">VT</button><button type="button" class="spk-chip" style="--h:198" data-open="s4" data-talk="1" aria-label="Dr. Tavpritesh Sethi — open abstract">TS</button><button type="button" class="spk-chip" style="--h:198" data-open="s4" data-talk="2" aria-label="Dr. S. Senthil Kumaran — open abstract">SK</button><button type="button" class="spk-chip" style="--h:198" data-open="s4" data-talk="3" aria-label="Dr. Neha Vinayak — open abstract">NV</button>                    <em>4 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:8" data-reveal>
+                <time>18:05 – 19:30</time>
+                <div class="evt">
+                  <i class="eico e-poster" aria-hidden="true"></i>
+                  <div><b>Poster &amp; networking session</b>
+                    <small>SC&amp;IS</small>                  </div>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:9" data-reveal>
+                <time>19:30 onwards</time>
+                <div class="evt">
+                  <i class="eico e-dinner" aria-hidden="true"></i>
+                  <div><b>Gala dinner</b>
+                    <small>SC&amp;IS · Informal reflections on the SC&amp;IS journey</small>                  </div>
+                </div>
+              </li>
+                              </ol>
+      </div>
+          <div class="day" data-dayview="day2">
+        <p class="day-head"><b>Saturday, 28 November 2026</b> <span>SAA Auditorium, JNU</span></p>
+        <ol class="timeline">
+                                    <li class="tl sess" style="--i:0;--h:132" data-reveal>
+                <time>09:30 – 11:15</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s5" data-tilt aria-label="Open Session 5 — Plant Bioinformatics">
+                  <span class="s-no">Session 5</span>
+                  <strong>Plant Bioinformatics</strong>
+                  <span class="s-meta">Chairs · Dr. Mukesh &amp; Dr. Abinaya</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:132" data-open="s5" data-talk="0" aria-label="Dr. Saurabh Raghuvanshi — open abstract">SR</button><button type="button" class="spk-chip" style="--h:132" data-open="s5" data-talk="1" aria-label="Dr. Senthil Kumar Muthappa — open abstract">SM</button><button type="button" class="spk-chip" style="--h:132" data-open="s5" data-talk="2" aria-label="Dr. Soham Ray — open abstract">SR</button><button type="button" class="spk-chip" style="--h:132" data-open="s5" data-talk="3" aria-label="Dr. Rishav Sahil — open abstract">RS</button>                    <em>4 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:1" data-reveal>
+                <time>11:15 – 11:30</time>
+                <div class="evt">
+                  <i class="eico e-tea" aria-hidden="true"></i>
+                  <div><b>Tea &amp; informal conversations</b>
+                                      </div>
+                </div>
+              </li>
+                                                <li class="tl sess" style="--i:2;--h:330" data-reveal>
+                <time>11:30 – 13:15</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s6" data-tilt aria-label="Open Session 6 — Complex Systems in Biology">
+                  <span class="s-no">Session 6</span>
+                  <strong>Complex Systems in Biology</strong>
+                  <span class="s-meta">Chairs · To be confirmed</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:330" data-open="s6" data-talk="0" aria-label="Dr. Samrat Chatterjee — open abstract">SC</button><button type="button" class="spk-chip" style="--h:330" data-open="s6" data-talk="1" aria-label="Dr. Areejit Samal — open abstract">AS</button><button type="button" class="spk-chip" style="--h:330" data-open="s6" data-talk="2" aria-label="Dr. Ganesh Bagler — open abstract">GB</button><button type="button" class="spk-chip" style="--h:330" data-open="s6" data-talk="3" aria-label="Dr. Rakesh Pandey — open abstract">RP</button>                    <em>4 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:3" data-reveal>
+                <time>13:15 – 14:15</time>
+                <div class="evt">
+                  <i class="eico e-lunch" aria-hidden="true"></i>
+                  <div><b>Lunch &amp; conversations</b>
+                    <small>SAA Auditorium, JNU</small>                  </div>
+                </div>
+              </li>
+                                                <li class="tl sess" style="--i:4;--h:48" data-reveal>
+                <time>14:15 – 16:00</time>
+                <div class="session glass" role="button" tabindex="0" data-session="s7" data-tilt aria-label="Open Session 7 — Molecular Biophysics and Biophysical Chemistry">
+                  <span class="s-no">Session 7</span>
+                  <strong>Molecular Biophysics and Biophysical Chemistry</strong>
+                  <span class="s-meta">Chairs · Dr. Arnab</span>
+                  <span class="s-people">
+                    <button type="button" class="spk-chip" style="--h:48" data-open="s7" data-talk="0" aria-label="Dr. Suman Dhar — open abstract">SD</button><button type="button" class="spk-chip" style="--h:48" data-open="s7" data-talk="1" aria-label="Dr. Shruthi Viswanath — open abstract">SV</button><button type="button" class="spk-chip" style="--h:48" data-open="s7" data-talk="2" aria-label="Dr. Ruchi Anand — open abstract">RA</button><button type="button" class="spk-chip" style="--h:48" data-open="s7" data-talk="3" aria-label="Dr. Anupam Mondal — open abstract">AM</button>                    <em>4 talks</em>
+                  </span>
+                  <span class="s-open">Unfold <i class="arrow"></i></span>
+                </div>
+              </li>
+                                                <li class="tl event" style="--i:5" data-reveal>
+                <time>16:00 – 16:30</time>
+                <div class="evt">
+                  <i class="eico e-close" aria-hidden="true"></i>
+                  <div><b>Valedictory session &amp; poster awards</b>
+                    <small>SAA Auditorium, JNU</small>                  </div>
+                </div>
+              </li>
+                              </ol>
+      </div>
+      </div>
+</section>
+<section class="section contact" id="contact" data-scene="4">
+  <div class="wrap center">
+    <p class="eyebrow" data-reveal>Contact</p>
+    <h2 class="big" data-split>Questions? Write to us.</h2>
+    <div class="contact-card glass" data-reveal>
+      <p class="person-role">Convenor</p>
+      <h3>Ragothaman Yennamalli</h3>
+      <a class="contact-mail" href="mailto:ragothaman@jnu.ac.in">ragothaman@jnu.ac.in</a>
+      <p class="person-sub">School of Computational and Integrative Sciences<br>Jawaharlal Nehru University, New Delhi 110067</p>
+    </div>
+  </div>
+</section>
+<section class="section register" id="register" data-scene="5">
+  <div class="wrap center">
+    <p class="eyebrow" data-reveal>Join us</p>
+    <h2 class="huge" data-split>Be there for the next 25.</h2>
+    <p class="body" data-reveal>Registration is free for SC&amp;IS students and faculty. Submit your abstract for the poster session before the deadline.</p>
+
+    <div class="deadlines" data-reveal data-px=".05">
+      <div class="dl glass" data-deadline="abstract">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="trk"/><circle cx="50" cy="50" r="44" class="bar"/></svg>
+        <b data-days>–</b><small>days left</small>
+        <span>Abstract deadline<br><strong>15 Nov 2026</strong></span>
+      </div>
+      <div class="dl glass" data-deadline="registration">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="trk"/><circle cx="50" cy="50" r="44" class="bar"/></svg>
+        <b data-days>–</b><small>days left</small>
+        <span>Registration deadline<br><strong>20 Nov 2026</strong></span>
+      </div>
+    </div>
+
+    <div class="cta center">
+      <a class="btn primary xl" href="https://tinyurl.com/scis25jnu" target="_blank" rel="noopener"><span>Register now</span><i class="arrow"></i></a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>School of Computational and Integrative Sciences</h4>
+        <p>Jawaharlal Nehru University, New Delhi<br>Founded as the School of Information Technology (SIT)</p>
+        <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU.</p>
+      </div>
+      <div>
+        <h4>Organising secretaries</h4>
+        <p>Shandar Ahmad · Mukesh Jain · Jyoti Singh Kirar · Kunwer Singh Mathur · Abinaya Manivannan · Gajendra Pratap Singh · Pallavi Somvanshi</p>
+      </div>
+      <div>
+        <h4>Quick links</h4>
+        <p><a href="#programme" data-fx="helix">Programme</a><br><a href="#contact">Contact</a><br><a href="https://tinyurl.com/scis25jnu" target="_blank" rel="noopener">Register</a></p>
+      </div>
+    </div>
+    <p class="fine"><span>© 2026 SC&amp;IS, JNU · Silver Jubilee Symposium · 27–28 November 2026</span><span class="credit">Designed &amp; developed by <a href="https://github.com/SougataJana" target="_blank" rel="noopener">Sougata Jana</a></span></p>
+  </div>
+</footer>
+
+<div id="sheet" class="sheet" data-lenis-prevent hidden role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <canvas id="sheetCanvas" aria-hidden="true"></canvas>
+  <div class="sheet-body">
+    <button class="sheet-close btn ghost" type="button" aria-label="Close session">Close <span aria-hidden="true">✕</span></button>
+    <p class="sheet-kicker" id="sheetKicker"></p>
+    <h3 class="sheet-title" id="sheetTitle"></h3>
+    <p class="sheet-meta" id="sheetMeta"></p>
+    <ul class="sheet-talks" id="sheetTalks"></ul>
+    <div class="sheet-abstract" id="sheetAbstract" hidden>
+      <button class="sheet-back" type="button">&larr; <span id="sheetBackLabel">Back to talks</span></button>
+      <div class="abs-speaker" id="absSpeaker">
+        <span class="avatar" id="absAvatar"><b id="absInitials"></b><u></u></span>
+        <div><strong id="absName"></strong><small id="absAff"></small></div>
+      </div>
+      <p class="abs-time" id="absTime"></p>
+      <h4 class="abs-title" id="absTitle"></h4>
+      <div class="abs-body" id="absBody"></div>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="programme-data">[{"id":"s1","number":1,"title":"Omics Science","time":"09:50 – 11:20","chairs":"Dr. Pallavi \u0026 Dr. Chari","venue":"SAA Auditorium, JNU","hue":175,"blurb":"Reading life at genome scale — single-cell, CRISPR and regulatory omics.","talks":[{"time":"09:50 – 10:20","speaker":"Dr. Nagaraj Balasubramanian","affiliation":"IISER Pune","slot":"25 + 5 min","keynote":true,"initials":"NB","title":null,"abstract":null},{"time":"10:20 – 10:50","speaker":"Dr. Debojyoti Chakraborty","affiliation":"CSIR-IGIB","slot":"25 + 5 min","keynote":true,"initials":"DC","title":null,"abstract":null},{"time":"10:50 – 11:20","speaker":"Dr. Sumeet Pal Singh","affiliation":"SNU","slot":"25 + 5 min","keynote":true,"initials":"SS","title":null,"abstract":null}]},{"id":"s2","number":2,"title":"Structural Biology and Drug Discovery","time":"11:50 – 13:20","chairs":"Dr. Raghu \u0026 Dr. Andrew","venue":"SAA Auditorium, JNU","hue":22,"blurb":"From atomic structure to molecules that bind, block and heal.","talks":[{"time":"11:50 – 12:20","speaker":"Dr. Aditya Padhi","affiliation":"IIT BHU","slot":"25 + 5 min","keynote":true,"initials":"AP","title":null,"abstract":null},{"time":"12:20 – 12:50","speaker":"Dr. Sourav Chatterjee","affiliation":"Ashoka University","slot":"25 + 5 min","keynote":true,"initials":"SC","title":null,"abstract":null},{"time":"12:50 – 13:05","speaker":"Dr. Manish Kumar","affiliation":"DU South Campus","slot":"12 + 3 min","keynote":false,"initials":"MK","title":null,"abstract":null},{"time":"13:05 – 13:20","speaker":"Dr. Sabeeha Hasnain","affiliation":"Mahindra University","slot":"12 + 3 min","keynote":false,"initials":"SH","title":null,"abstract":null}]},{"id":"s3","number":3,"title":"Mathematical Biology and Statistical Modelling","time":"14:20 – 15:50","chairs":"Dr. Sapna, Dr. Mathur \u0026 Dr. Narendar","venue":"SAA Auditorium, JNU","hue":268,"blurb":"Equations, dynamics and inference that turn measurements into mechanism.","talks":[{"time":"14:20 – 14:50","speaker":"Dr. Rashmi Bhardwaj","affiliation":"GGSIPU","slot":"25 + 5 min","keynote":true,"initials":"RB","title":null,"abstract":null},{"time":"14:50 – 15:20","speaker":"Dr. Manish Dev Shrimali","affiliation":"Central University of Rajasthan","slot":"25 + 5 min","keynote":true,"initials":"MS","title":null,"abstract":null},{"time":"15:20 – 15:35","speaker":"Dr. Kuldeep Singh Yadav","affiliation":"MANIT Bhopal","slot":"12 + 3 min","keynote":false,"initials":"KY","title":null,"abstract":null},{"time":"15:35 – 15:50","speaker":"Dr. Rahul Gupta","affiliation":"University of Bristol","slot":"12 + 3 min","keynote":false,"initials":"RG","title":null,"abstract":null}]},{"id":"s4","number":4,"title":"Artificial Intelligence in Computational Biology","time":"16:20 – 18:05","chairs":"Dr. Shandar, Dr. Rakesh \u0026 Dr. Jyoti","venue":"SAA Auditorium, JNU","hue":198,"blurb":"Learning from biological data — models that predict, design and explain.","talks":[{"time":"16:20 – 16:50","speaker":"Dr. Vivek Tiwari","affiliation":"IISER Berhampur","slot":"25 + 5 min","keynote":true,"initials":"VT","title":null,"abstract":null},{"time":"16:50 – 17:20","speaker":"Dr. Tavpritesh Sethi","affiliation":"IIIT Delhi","slot":"25 + 5 min","keynote":true,"initials":"TS","title":null,"abstract":null},{"time":"17:20 – 17:50","speaker":"Dr. S. Senthil Kumaran","affiliation":"AIIMS, New Delhi","slot":"25 + 5 min","keynote":true,"initials":"SK","title":null,"abstract":null},{"time":"17:50 – 18:05","speaker":"Dr. Neha Vinayak","affiliation":"BITS Pilani","slot":"12 + 3 min","keynote":false,"initials":"NV","title":null,"abstract":null}]},{"id":"s5","number":5,"title":"Plant Bioinformatics","time":"09:30 – 11:15","chairs":"Dr. Mukesh \u0026 Dr. Abinaya","venue":"SAA Auditorium, JNU","hue":132,"blurb":"Genomes, stress and function across the plant kingdom.","talks":[{"time":"09:30 – 10:00","speaker":"Dr. Saurabh Raghuvanshi","affiliation":"DU","slot":"25 + 5 min","keynote":true,"initials":"SR","title":null,"abstract":null},{"time":"10:00 – 10:30","speaker":"Dr. Senthil Kumar Muthappa","affiliation":"NIPGR","slot":"25 + 5 min","keynote":true,"initials":"SM","title":null,"abstract":null},{"time":"10:30 – 11:00","speaker":"Dr. Soham Ray","affiliation":"ICAR-IARI","slot":"25 + 5 min","keynote":true,"initials":"SR","title":null,"abstract":null},{"time":"11:00 – 11:15","speaker":"Dr. Rishav Sahil","affiliation":"BHU","slot":"12 + 3 min","keynote":false,"initials":"RS","title":null,"abstract":null}]},{"id":"s6","number":6,"title":"Complex Systems in Biology","time":"11:30 – 13:15","chairs":"To be confirmed","venue":"SAA Auditorium, JNU","hue":330,"blurb":"Networks, emergence and the physics of living systems.","talks":[{"time":"11:30 – 12:00","speaker":"Dr. Samrat Chatterjee","affiliation":"THSTI","slot":"25 + 5 min","keynote":true,"initials":"SC","title":null,"abstract":null},{"time":"12:00 – 12:30","speaker":"Dr. Areejit Samal","affiliation":"IMSc, Chennai","slot":"25 + 5 min","keynote":true,"initials":"AS","title":null,"abstract":null},{"time":"12:30 – 13:00","speaker":"Dr. Ganesh Bagler","affiliation":"IIIT Delhi","slot":"25 + 5 min","keynote":true,"initials":"GB","title":null,"abstract":null},{"time":"13:00 – 13:15","speaker":"Dr. Rakesh Pandey","affiliation":"BHU","slot":"12 + 3 min","keynote":false,"initials":"RP","title":null,"abstract":null}]},{"id":"s7","number":7,"title":"Molecular Biophysics and Biophysical Chemistry","time":"14:15 – 16:00","chairs":"Dr. Arnab","venue":"SAA Auditorium, JNU","hue":48,"blurb":"Forces, folding and dynamics of the molecules that do the work.","talks":[{"time":"14:15 – 14:45","speaker":"Dr. Suman Dhar","affiliation":"TERI, New Delhi","slot":"25 + 5 min","keynote":true,"initials":"SD","title":null,"abstract":null},{"time":"14:45 – 15:15","speaker":"Dr. Shruthi Viswanath","affiliation":"NCBS","slot":"25 + 5 min","keynote":true,"initials":"SV","title":null,"abstract":null},{"time":"15:15 – 15:45","speaker":"Dr. Ruchi Anand","affiliation":"IIT Bombay","slot":"25 + 5 min","keynote":true,"initials":"RA","title":null,"abstract":null},{"time":"15:45 – 16:00","speaker":"Dr. Anupam Mondal","affiliation":"IIT Kharagpur","slot":"12 + 3 min","keynote":false,"initials":"AM","title":null,"abstract":null}]}]</script>
+<script>window.SCIS = {"start":"2026-11-27T09:00:00+05:30","abstract":"2026-11-15T23:59:00+05:30","registration":"2026-11-20T23:59:00+05:30"};</script>
+<script src="assets/js/fx.js?v=1794054469" defer></script>
+<script type="module" src="assets/js/app.js?v=1794331872"></script>
+</body>
+</html>
