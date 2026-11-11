@@ -140,11 +140,20 @@ export function createStage(canvas) {
     }
     updatePointScale(renderer, camera); composer.render();
 
-    // adaptive quality
-    acc += dt; frames++;
-    if (frames === 90) {
-      const avg = acc / frames; frames = 0; acc = 0;
-      if (avg > .036 && !degraded) { degraded = true; renderer.setPixelRatio(1); resize(); bloom.strength *= .8; }
+    // adaptive quality — desktop only. On phones/low-core devices this already
+    // starts at a conservative pixelRatio (see makeRenderer), and forcing a
+    // mid-session framebuffer reallocation (setPixelRatio + full resize) here
+    // is what produced a visible flash shortly after the page loaded, while
+    // the visitor is sitting on the landing page and the first ~90 frames are
+    // still averaging out. Desktops rarely hit this path in the first place,
+    // so skipping it for LOW removes the flash without losing the recovery
+    // this was built for (heavy multi-tab/dual-GPU desktop sessions).
+    if (!LOW) {
+      acc += dt; frames++;
+      if (frames === 90) {
+        const avg = acc / frames; frames = 0; acc = 0;
+        if (avg > .036 && !degraded) { degraded = true; renderer.setPixelRatio(1); resize(); bloom.strength *= .8; }
+      }
     }
   }
 
