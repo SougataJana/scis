@@ -78,20 +78,20 @@ final class Programme
         }
 
         return $cache = [
-            new Session('s1', 1, 'Omics Science', '09:50 – 11:20', 'A. Krishnamachari & Dr. Pallavi Somvanshi', self::D1_VENUE, 175,
+            new Session('s1', 1, 'Omics Science', '09:50 – 11:20', 'Dr. A. Krishnamachari & Dr. Pallavi Somvanshi', self::D1_VENUE, 175,
                 'Reading life at genome scale — single-cell, CRISPR and regulatory omics.', [
                 self::talk('09:50 – 10:20', 'Dr. Nagaraj Balasubramanian', 'IISER Pune'),
                 self::talk('10:20 – 10:50', 'Dr. Debojyoti Chakraborty', 'CSIR-IGIB'),
                 self::talk('10:50 – 11:20', 'Dr. Sumeet Pal Singh', 'SNU'),
             ]),
-            new Session('s2', 2, 'Structural Biology and Drug Discovery', '11:50 – 13:20', 'Dr. Raghu & Andrew M. Lynn', self::D1_VENUE, 22,
+            new Session('s2', 2, 'Structural Biology and Drug Discovery', '11:50 – 13:20', 'Dr. Ragothaman Yennamalli & Dr. Andrew M. Lynn', self::D1_VENUE, 22,
                 'From atomic structure to molecules that bind, block and heal.', [
                 self::talk('11:50 – 12:20', 'Dr. Aditya Padhi', 'IIT BHU'),
                 self::talk('12:20 – 12:50', 'Dr. Sourav Chatterjee', 'Ashoka University'),
                 self::talk('12:50 – 13:05', 'Dr. Manish Kumar', 'DU South Campus', true),
                 self::talk('13:05 – 13:20', 'Dr. Sabeeha Hasnain', 'Mahindra University', true),
             ]),
-            new Session('s3', 3, 'Mathematical Biology and Statistical Modelling', '14:20 – 15:50', 'Sapna Ratan Shah, Dr. Kunwer Singh Mathur & Dr. Narinder Singh Sahni', self::D1_VENUE, 268,
+            new Session('s3', 3, 'Mathematical Biology and Statistical Modelling', '14:20 – 15:50', 'Dr. Sapna Ratan Shah, Dr. Kunwer Singh Mathur & Dr. Narinder Singh Sahni', self::D1_VENUE, 268,
                 'Equations, dynamics and inference that turn measurements into mechanism.', [
                 self::talk('14:20 – 14:50', 'Dr. Rashmi Bhardwaj', 'GGSIPU'),
                 self::talk('14:50 – 15:20', 'Dr. Manish Dev Shrimali', 'Central University of Rajasthan'),

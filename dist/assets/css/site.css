@@ -161,6 +161,8 @@ html:not(.no-intro):not(.intro-done) body { overflow: hidden; }
 .loc-pin { display: inline-flex; align-items: flex-start; gap: 6px; margin-top: 10px; color: var(--mute); font-size: 13px; text-decoration: none; transition: color .25s; }
 .loc-pin svg { flex: none; margin-top: 2px; color: var(--teal); }
 .loc-pin:hover, .loc-pin:focus-visible { color: var(--teal); }
+.inline-map-link { color: var(--amber); text-decoration: underline; text-decoration-color: rgba(255, 191, 105, .35); text-underline-offset: 2px; transition: color .2s, text-decoration-color .2s; }
+.inline-map-link:hover, .inline-map-link:focus-visible { color: var(--teal); text-decoration-color: var(--teal); }
 @media (hover: none) { .map-globe-hint { opacity: 1; bottom: -4px; padding: 6px 12px; } }
 .panel .btn { margin-top: 18px; }
 @keyframes spin2 { to { transform: rotate(360deg); } }
