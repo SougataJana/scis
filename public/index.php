@@ -118,7 +118,11 @@ require $root . '/views/register.php';
     'start' => $event['start'],
     'abstract' => $event['abstract_deadline'],
     'registration' => $event['registration_deadline'],
-    'stageUrl' => $asset('js/gl/stage.js'),
+    // just the cache-busting token: the dynamic import() in app.js needs a specifier
+    // relative to its OWN location (./gl/stage.js), not one relative to the document
+    // root like asset() returns — those are different base paths once app.js isn't
+    // sitting at the document root itself.
+    'stageV' => (string) @filemtime(__DIR__ . '/assets/js/gl/stage.js'),
 ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_THROW_ON_ERROR) ?>;</script>
 <script src="<?= e($asset('js/fx.js')) ?>" defer></script>
 <script type="module" src="<?= e($asset('js/app.js')) ?>"></script>

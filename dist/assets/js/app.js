@@ -277,7 +277,9 @@ async function boot() {
   setTimeout(reveal, 8000); // failsafe — never leave the page hidden
   const fonts = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1800))]);
   try {
-    const m = await import(SCIS.stageUrl || './gl/stage.js');
+    // relative to THIS module (assets/js/app.js), matching the modulepreload link's URL
+    // (which is relative to the document root instead) so both hit the same cache entry.
+    const m = await import(`./gl/stage.js${SCIS.stageV ? '?v=' + SCIS.stageV : ''}`);
     stage = m.createStage($('#stage'));
   } catch (e) { console.warn('WebGL stage unavailable', e); root.classList.add('nogl'); }
   await fonts;
