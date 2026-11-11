@@ -411,10 +411,20 @@ export class SessionViewer {
     const { composer, bloom } = makeComposer(this.renderer, this.scene, this.camera, { strength: .5, radius: .55, threshold: .62 });
     this.composer = composer; this.bloom = bloom; this.pivot = new THREE.Group(); this.scene.add(this.pivot);
     this.t = 0; this.last = 0; this._loop = this._loop.bind(this);
+    this._lastW = 0; this._lastH = 0;
     addEventListener('resize', () => this.resize());
   }
   resize() {
     const W = innerWidth, H = innerHeight;
+    // Mobile browsers (Android Chrome in particular) hide/show their address
+    // bar while scrolling, which fires 'resize' with a height-only change and
+    // no width change — rebuilding the GL framebuffers on every one of those
+    // caused a visible blink. Treat that case as browser-chrome noise and skip
+    // the GL resize; a genuine resize (rotation, real window resize) changes
+    // the width too. See the matching note in gl/stage.js.
+    const chromeToggle = this._lastW > 0 && W === this._lastW && Math.abs(H - this._lastH) < 160;
+    this._lastW = W; this._lastH = H;
+    if (chromeToggle) { this.layout(); return; }
     // guard against a transient 0 (or stale) viewport reading on first layout —
     // see the matching note in gl/stage.js.
     if (W > 0 && H > 0) {

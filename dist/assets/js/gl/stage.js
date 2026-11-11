@@ -53,8 +53,21 @@ export function createStage(canvas) {
     return anchors[anchors.length - 1].s;
   }
 
+  let lastW = 0, lastH = 0;
   function resize() {
-    W = innerWidth; H = innerHeight;
+    const newW = innerWidth, newH = innerHeight;
+    // Mobile browsers (Android Chrome in particular) hide/show their address
+    // bar while the page is scrolled, which fires a 'resize' event and changes
+    // innerHeight by the bar's height without changing innerWidth. Rebuilding
+    // the renderer/composer framebuffers on every one of those events is what
+    // produced the visible "blink" on phones — a real resize (orientation
+    // change, actual window resize) always changes the width too, so treat a
+    // width-unchanged, modest height-only change as browser-chrome noise and
+    // skip the GL resize for it.
+    const chromeToggle = lastW > 0 && newW === lastW && Math.abs(newH - lastH) < 160;
+    lastW = newW; lastH = newH;
+    W = newW; H = newH;
+    if (chromeToggle) { measure(); return; }
     // on some hosts the very first layout pass can momentarily report a 0 (or stale)
     // viewport size before the browser has finished its first paint; sizing the
     // renderer/composer to that leaves their framebuffers permanently zero-sized
