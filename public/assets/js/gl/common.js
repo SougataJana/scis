@@ -23,9 +23,16 @@ export function updatePointScale(renderer, camera) {
   POINT_SCALE.value = h / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
 }
 
-export function makeRenderer(canvas, { alpha = false, antialias = true } = {}) {
+export function makeRenderer(canvas, { alpha = false, antialias = !LOW } = {}) {
+  // MSAA roughly doubles-to-quadruples the framebuffer memory/bandwidth the
+  // GPU driver needs per frame. On budget mobile GPUs (weak Mali/PowerVR
+  // parts common on sub-₹15k Android phones) that's a realistic trigger for
+  // the browser silently dropping and restoring the WebGL context under
+  // memory pressure — which shows up to the visitor as a repeating blink of
+  // the canvas, not a one-time flash. Default it off for LOW/mobile devices;
+  // an explicit antialias option (if ever passed) still wins.
   const r = new THREE.WebGLRenderer({ canvas, antialias, alpha, powerPreference: 'high-performance' });
-  r.setPixelRatio(Math.min(devicePixelRatio || 1, LOW ? 1.25 : 1.75));
+  r.setPixelRatio(Math.min(devicePixelRatio || 1, LOW ? 1 : 1.75));
   r.toneMapping = THREE.ACESFilmicToneMapping;
   r.toneMappingExposure = .95;
   return r;

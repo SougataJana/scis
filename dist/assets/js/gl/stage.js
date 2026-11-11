@@ -170,8 +170,8 @@ export function createStage(canvas) {
      heavy WebGL tabs open at once, the context can drop for a moment; without handling this
      the canvas just goes black or flashes stale frames until reload. Pause cleanly and pick
      the render loop back up once the browser hands the context back. */
-  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); paused = true; }, false);
-  canvas.addEventListener('webglcontextrestored', () => { degraded = false; frames = 0; acc = 0; resize(); paused = false; }, false);
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); paused = true; console.warn('[stage] WebGL context lost'); }, false);
+  canvas.addEventListener('webglcontextrestored', () => { degraded = false; frames = 0; acc = 0; resize(); paused = false; console.warn('[stage] WebGL context restored'); }, false);
 
   resize();
   renderer.compile(scene, camera);
