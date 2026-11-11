@@ -14,17 +14,19 @@ $event = [
     'school'    => 'School of Computational and Integrative Sciences',
     'university'=> 'Jawaharlal Nehru University, New Delhi',
     'title'     => 'SC&IS Silver Jubilee Symposium',
-    'theme'     => 'Computational and Integrative Biology Across Scales',
+    'theme'     => 'Computational Science Across Scales',
     'start'     => '2026-11-27T09:00:00+05:30',
     'abstract_deadline'     => '2026-11-15T23:59:00+05:30',
     'registration_deadline' => '2026-11-20T23:59:00+05:30',
     'register_url' => 'https://tinyurl.com/scis25jnu',
     'map_url'   => 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode('School of Computational and Integrative Sciences, Jawaharlal Nehru University, New Delhi 110067'),
+    'fee_student' => '₹1,000',
+    'fee_other'   => '₹2,000',
 ];
 
 // Patrons and organisers (shown with photos in Details → Who).
 $people = [
-    ['key' => 'chief-patron', 'role' => 'Chief Patron', 'name' => 'Prof. Shantishree Dhulipudi Pandit', 'sub' => 'Vice-Chancellor, JNU', 'initials' => 'SP'],
+    ['key' => 'chief-patron', 'role' => 'Chief Patron', 'name' => 'Prof. Santishree Dhulipudi Pandit', 'sub' => 'Vice-Chancellor, JNU', 'initials' => 'SP'],
     ['key' => 'patron',       'role' => 'Patron',       'name' => 'Prof. R. K. Brojen Singh',           'sub' => 'Dean, SC&IS, JNU',     'initials' => 'BS'],
     ['key' => 'convenor',     'role' => 'Convenor',     'name' => 'Ragothaman Yennamalli',              'sub' => 'SC&IS, JNU',           'initials' => 'RY'],
     ['key' => 'co-convenor',  'role' => 'Co-convenor',  'name' => 'Arnab Bhattacharjee',                'sub' => 'SC&IS, JNU',           'initials' => 'AB'],
@@ -35,9 +37,12 @@ foreach ($people as &$pp) {
     foreach (['jpg', 'png', 'webp'] as $ext) if (is_file(__DIR__ . "/assets/img/{$pp['key']}.$ext")) { $pp['photo'] = "{$pp['key']}.$ext"; break; }
 }
 unset($pp);
-$contact = ['role' => 'Convenor', 'name' => 'Ragothaman Yennamalli', 'email' => 'ragothaman@jnu.ac.in'];
+$contacts = [
+    ['role' => 'Convenor',    'name' => 'Ragothaman Yennamalli', 'email' => 'ragothaman@jnu.ac.in'],
+    ['role' => 'Co-convenor', 'name' => 'Arnab Bhattacharjee',   'email' => 'arnab@jnu.ac.in'],
+];
 // Footer credit
-$credit = ['name' => 'Sougata Jana', 'url' => 'https://github.com/SougataJana'];
+$credit = ['name' => 'Sougata Jana', 'url' => 'https://github.com/SougataJana', 'email' => 'sougataj1@gmail.com'];
 
 $sessions = Programme::sessions();
 $days     = Programme::days();
@@ -113,6 +118,7 @@ require $root . '/views/register.php';
     'start' => $event['start'],
     'abstract' => $event['abstract_deadline'],
     'registration' => $event['registration_deadline'],
+    'stageUrl' => $asset('js/gl/stage.js'),
 ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_THROW_ON_ERROR) ?>;</script>
 <script src="<?= e($asset('js/fx.js')) ?>" defer></script>
 <script type="module" src="<?= e($asset('js/app.js')) ?>"></script>

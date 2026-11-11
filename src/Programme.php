@@ -78,34 +78,34 @@ final class Programme
         }
 
         return $cache = [
-            new Session('s1', 1, 'Omics Science', '09:50 – 11:20', 'Dr. Pallavi & Dr. Chari', self::D1_VENUE, 175,
+            new Session('s1', 1, 'Omics Science', '09:50 – 11:20', 'A. Krishnamachari & Dr. Pallavi Somvanshi', self::D1_VENUE, 175,
                 'Reading life at genome scale — single-cell, CRISPR and regulatory omics.', [
                 self::talk('09:50 – 10:20', 'Dr. Nagaraj Balasubramanian', 'IISER Pune'),
                 self::talk('10:20 – 10:50', 'Dr. Debojyoti Chakraborty', 'CSIR-IGIB'),
                 self::talk('10:50 – 11:20', 'Dr. Sumeet Pal Singh', 'SNU'),
             ]),
-            new Session('s2', 2, 'Structural Biology and Drug Discovery', '11:50 – 13:20', 'Dr. Raghu & Dr. Andrew', self::D1_VENUE, 22,
+            new Session('s2', 2, 'Structural Biology and Drug Discovery', '11:50 – 13:20', 'Dr. Raghu & Andrew M. Lynn', self::D1_VENUE, 22,
                 'From atomic structure to molecules that bind, block and heal.', [
                 self::talk('11:50 – 12:20', 'Dr. Aditya Padhi', 'IIT BHU'),
                 self::talk('12:20 – 12:50', 'Dr. Sourav Chatterjee', 'Ashoka University'),
                 self::talk('12:50 – 13:05', 'Dr. Manish Kumar', 'DU South Campus', true),
                 self::talk('13:05 – 13:20', 'Dr. Sabeeha Hasnain', 'Mahindra University', true),
             ]),
-            new Session('s3', 3, 'Mathematical Biology and Statistical Modelling', '14:20 – 15:50', 'Dr. Sapna, Dr. Mathur & Dr. Narendar', self::D1_VENUE, 268,
+            new Session('s3', 3, 'Mathematical Biology and Statistical Modelling', '14:20 – 15:50', 'Sapna Ratan Shah, Dr. Kunwer Singh Mathur & Dr. Narinder Singh Sahni', self::D1_VENUE, 268,
                 'Equations, dynamics and inference that turn measurements into mechanism.', [
                 self::talk('14:20 – 14:50', 'Dr. Rashmi Bhardwaj', 'GGSIPU'),
                 self::talk('14:50 – 15:20', 'Dr. Manish Dev Shrimali', 'Central University of Rajasthan'),
                 self::talk('15:20 – 15:35', 'Dr. Kuldeep Singh Yadav', 'MANIT Bhopal', true),
                 self::talk('15:35 – 15:50', 'Dr. Rahul Gupta', 'University of Bristol', true),
             ]),
-            new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar, Dr. Rakesh & Dr. Jyoti', self::D1_VENUE, 198,
+            new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar Ahmad, Dr. Rakesh & Dr. Jyoti Singh Kirar', self::D1_VENUE, 198,
                 'Learning from biological data — models that predict, design and explain.', [
                 self::talk('16:20 – 16:50', 'Dr. Vivek Tiwari', 'IISER Berhampur'),
                 self::talk('16:50 – 17:20', 'Dr. Tavpritesh Sethi', 'IIIT Delhi'),
                 self::talk('17:20 – 17:50', 'Dr. S. Senthil Kumaran', 'AIIMS, New Delhi'),
                 self::talk('17:50 – 18:05', 'Dr. Neha Vinayak', 'BITS Pilani', true),
             ]),
-            new Session('s5', 5, 'Plant Bioinformatics', '09:30 – 11:15', 'Dr. Mukesh & Dr. Abinaya', self::D2_VENUE, 132,
+            new Session('s5', 5, 'Plant Bioinformatics', '09:30 – 11:15', 'Dr. Mukesh Jain & Dr. Abinaya Manivannan', self::D2_VENUE, 132,
                 'Genomes, stress and function across the plant kingdom.', [
                 self::talk('09:30 – 10:00', 'Dr. Saurabh Raghuvanshi', 'DU'),
                 self::talk('10:00 – 10:30', 'Dr. Senthil Kumar Muthappa', 'NIPGR'),
@@ -119,7 +119,7 @@ final class Programme
                 self::talk('12:30 – 13:00', 'Dr. Ganesh Bagler', 'IIIT Delhi'),
                 self::talk('13:00 – 13:15', 'Dr. Rakesh Pandey', 'BHU', true),
             ]),
-            new Session('s7', 7, 'Molecular Biophysics and Biophysical Chemistry', '14:15 – 16:00', 'Dr. Arnab', self::D2_VENUE, 48,
+            new Session('s7', 7, 'Molecular Biophysics and Biophysical Chemistry', '14:15 – 16:00', 'Dr. Arnab Bhattacharjee', self::D2_VENUE, 48,
                 'Forces, folding and dynamics of the molecules that do the work.', [
                 self::talk('14:15 – 14:45', 'Dr. Suman Dhar', 'TERI, New Delhi'),
                 self::talk('14:45 – 15:15', 'Dr. Shruthi Viswanath', 'NCBS'),

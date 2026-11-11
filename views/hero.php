@@ -14,13 +14,10 @@
     <div class="chips" data-reveal style="--d:.65s">
       <span class="chip"><i class="ico ico-cal"></i> 27 – 28 November 2026</span>
       <span class="chip"><i class="ico ico-pin"></i> JNU, New Delhi</span>
-      <span class="chip"><i class="ico ico-spark"></i> Silver Jubilee Symposium</span>
     </div>
 
     <div class="cta" data-reveal style="--d:.8s">
       <a class="btn primary" href="#programme"><span>Explore the programme</span><i class="arrow"></i></a>
-      <a class="btn" href="#register"><span>Register — free for SC&amp;IS</span><i class="arrow"></i></a>
-      <a class="btn ghost" href="#glance" data-fx="radar"><span>When &amp; where</span></a>
     </div>
 
     <div class="countdown" id="countdown" data-reveal style="--d:.95s" aria-live="off">

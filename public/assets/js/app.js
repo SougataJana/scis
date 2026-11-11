@@ -22,7 +22,19 @@ if (!reduce) {
 }
 const pxVal = (v) => parseFloat(v) || 0;
 function headerClearance() { return pxVal(getComputedStyle(root).getPropertyValue('--hdr-h')) + 16; }
-const scrollToEl = (el) => (lenis ? lenis.scrollTo(el, { offset: -headerClearance(), duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4) }) : el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }));
+function scrollToEl(el, hops = 0) {
+  if (!lenis) { el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+  lenis.scrollTo(el, {
+    offset: 0, duration: hops === 0 ? 1.5 : .4, easing: (t) => 1 - Math.pow(1 - t, 4),
+    onComplete: () => {
+      // scroll-linked parallax/reveal effects on sections above `el` can nudge its
+      // final rendered position after lenis's one-shot target was computed; correct
+      // once more (snapping, no animation) if we landed off by more than a few px.
+      const drift = el.getBoundingClientRect().top - headerClearance();
+      if (hops < 3 && Math.abs(drift) > 4) scrollToEl(el, hops + 1);
+    },
+  });
+}
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[href^="#"]'); if (!a) return;
   const id = a.getAttribute('href'); if (id.length < 2) return;
@@ -265,7 +277,7 @@ async function boot() {
   setTimeout(reveal, 8000); // failsafe — never leave the page hidden
   const fonts = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1800))]);
   try {
-    const m = await import('./gl/stage.js');
+    const m = await import(SCIS.stageUrl || './gl/stage.js');
     stage = m.createStage($('#stage'));
   } catch (e) { console.warn('WebGL stage unavailable', e); root.classList.add('nogl'); }
   await fonts;

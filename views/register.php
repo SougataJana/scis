@@ -4,6 +4,10 @@
     <h2 class="huge" data-split>Be there for the next 25.</h2>
     <p class="body" data-reveal>Registration is free for SC&amp;IS students and faculty. Submit your abstract for the poster session before the deadline.</p>
 
+    <div class="cta center" id="register-cta">
+      <a class="btn primary xl" href="<?= e($event['register_url']) ?>" target="_blank" rel="noopener"><span>Register now</span><i class="arrow"></i></a>
+    </div>
+
     <div class="deadlines" data-reveal data-px=".05">
       <div class="dl glass" data-deadline="abstract">
         <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="trk"/><circle cx="50" cy="50" r="44" class="bar"/></svg>
@@ -17,8 +21,6 @@
       </div>
     </div>
 
-    <div class="cta center">
-      <a class="btn primary xl" href="<?= e($event['register_url']) ?>" target="_blank" rel="noopener"><span>Register now</span><i class="arrow"></i></a>
-    </div>
+    <p class="fee-note" data-reveal>Free for SC&amp;IS students &amp; faculty &nbsp;·&nbsp; Non-SC&amp;IS: <?= e($event['fee_student']) ?> students / <?= e($event['fee_other']) ?> faculty &amp; others</p>
   </div>
 </section>

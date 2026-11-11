@@ -55,9 +55,17 @@ export function createStage(canvas) {
 
   function resize() {
     W = innerWidth; H = innerHeight;
-    renderer.setSize(W, H, false);
-    composer.setSize(W, H); bloom.resolution.set(W, H);
-    camera.aspect = W / H; camera.updateProjectionMatrix(); updatePointScale(renderer, camera);
+    // on some hosts the very first layout pass can momentarily report a 0 (or stale)
+    // viewport size before the browser has finished its first paint; sizing the
+    // renderer/composer to that leaves their framebuffers permanently zero-sized
+    // (silent GL errors, canvas never recovers on its own) until another resize
+    // happens to fire. Skip the GL resize when that happens — a follow-up call
+    // below retries shortly after, once layout has definitely settled.
+    if (W > 0 && H > 0) {
+      renderer.setSize(W, H, false);
+      composer.setSize(W, H); bloom.resolution.set(W, H);
+      camera.aspect = W / H; camera.updateProjectionMatrix(); updatePointScale(renderer, camera);
+    }
     measure();
   }
 
@@ -128,7 +136,11 @@ export function createStage(canvas) {
   }
 
   addEventListener('resize', resize);
-  addEventListener('load', measure);
+  addEventListener('load', resize);
+  // extra safety net for the zero-size race described above: retry shortly after
+  // first paint even if no 'resize'/'load' event fires, so a bad initial reading
+  // can never leave the canvas permanently mis-sized.
+  setTimeout(resize, 300);
   new ResizeObserver(measure).observe(document.body);
   addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
 

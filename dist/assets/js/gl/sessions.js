@@ -414,8 +414,14 @@ export class SessionViewer {
     addEventListener('resize', () => this.resize());
   }
   resize() {
-    const W = innerWidth, H = innerHeight; this.renderer.setSize(W, H, false); this.composer.setSize(W, H); this.bloom.resolution.set(W, H);
-    this.camera.aspect = W / H; this.camera.updateProjectionMatrix(); updatePointScale(this.renderer, this.camera); this.layout();
+    const W = innerWidth, H = innerHeight;
+    // guard against a transient 0 (or stale) viewport reading on first layout —
+    // see the matching note in gl/stage.js.
+    if (W > 0 && H > 0) {
+      this.renderer.setSize(W, H, false); this.composer.setSize(W, H); this.bloom.resolution.set(W, H);
+      this.camera.aspect = W / H; this.camera.updateProjectionMatrix(); updatePointScale(this.renderer, this.camera);
+    }
+    this.layout();
   }
   layout() {
     const W = innerWidth, H = innerHeight, wide = W > 900, asp = W / H, fit = (this.cur && this.cur.fitW) || 5.4;
