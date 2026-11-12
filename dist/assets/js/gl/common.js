@@ -55,6 +55,16 @@ export function makeComposer(renderer, scene, camera, { strength = .8, radius = 
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), strength, radius, threshold);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
+  /* Temporary on-device A/B: ?nobloom=1 skips the bloom pass, ?bloomthr=<n>
+     moves its luminance threshold. Hiding every cell part stopped the mobile
+     flicker while removing any single one did not, so the cause is shared by
+     all of them — bloom is what they all feed, it only does visible work where
+     there is bright content (hence cell-only), and its half-float targets and
+     threshold are both known sources of driver-specific artefacts (hence some
+     phones and not others). Inert unless passed; remove once confirmed. */
+  if (/[?&]nobloom=1\b/.test(location.search)) bloom.enabled = false;
+  const thr = parseFloat(new URLSearchParams(location.search).get('bloomthr'));
+  if (Number.isFinite(thr)) bloom.threshold = thr;
   return { composer, bloom };
 }
 
