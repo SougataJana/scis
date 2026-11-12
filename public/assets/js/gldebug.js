@@ -10,13 +10,27 @@
 
 export function start(canvas) {
   const counters = { draws: 0 };
+  // Sampling has to happen right after a draw to the DEFAULT framebuffer (the
+  // screen) and before the frame is composited: with preserveDrawingBuffer
+  // false the buffer's contents are undefined once compositing has happened, so
+  // reading from a plain rAF callback just returns zeros. The composer's final
+  // OutputPass is the one that targets the null framebuffer, so hooking draws
+  // and sampling only when FRAMEBUFFER_BINDING is null catches exactly that,
+  // at most once per frame.
+  let wantSample = false;
+  function afterScreenDraw(gl) {
+    if (!wantSample) return;
+    try { if (gl.getParameter(gl.FRAMEBUFFER_BINDING) !== null) return; } catch (e) { return; }
+    wantSample = false;
+    sampleLuminance(gl);
+  }
   for (const Ctx of [self.WebGLRenderingContext, self.WebGL2RenderingContext].filter(Boolean)) {
     const p = Ctx.prototype;
     if (p.__glDbgPatched) continue;
     p.__glDbgPatched = true;
     const de = p.drawElements, da = p.drawArrays;
-    p.drawElements = function (m, c, t, o) { counters.draws++; return de.call(this, m, c, t, o); };
-    p.drawArrays = function (m, f, c) { counters.draws++; return da.call(this, m, f, c); };
+    p.drawElements = function (m, c, t, o) { counters.draws++; const r = de.call(this, m, c, t, o); afterScreenDraw(this); return r; };
+    p.drawArrays = function (m, f, c) { counters.draws++; const r = da.call(this, m, f, c); afterScreenDraw(this); return r; };
   }
 
   let lost = 0, restored = 0;
@@ -51,8 +65,28 @@ export function start(canvas) {
   let frames = 0, janks = 0, worst = 0, worstWin = 0, fps = 0;
   let last = performance.now(), winStart = last, winFrames = 0;
 
+  // Brightness sampler — the decisive test for where the blink lives.
+  // Reads a small block of the canvas's own pixels each frame and tracks how
+  // much its mean luminance swings. A large swing means the rendered CONTENT is
+  // flickering (shader/bloom/visibility). A flat reading while the eye still
+  // sees blinking means the content is steady and the flicker is happening in
+  // compositing, outside the canvas — the two need completely different fixes.
+  let lumMin = 999, lumMax = -1, lumSwing = 0, lumNow = -1;
+  const px = new Uint8Array(16 * 16 * 4);
+  function sampleLuminance(gl) {
+    try {
+      if (!gl || !canvas || !canvas.width) return;
+      const x = (gl.drawingBufferWidth >> 1) - 8, y = (gl.drawingBufferHeight >> 1) - 8;
+      gl.readPixels(x, y, 16, 16, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      let sum = 0;
+      for (let i = 0; i < px.length; i += 4) sum += px[i] * .2126 + px[i + 1] * .7152 + px[i + 2] * .0722;
+      lumNow = sum / (px.length / 4);
+      if (lumNow < lumMin) lumMin = lumNow;
+      if (lumNow > lumMax) lumMax = lumNow;
+    } catch (e) { /* diagnostic only */ }
+  }
+
   function tick(now) {
-    requestAnimationFrame(tick);
     const gap = now - last; last = now;
     if (frames > 3) {                    // ignore first frames (startup noise)
       if (gap > worst) worst = gap;
@@ -61,6 +95,8 @@ export function start(canvas) {
     }
     frames++; winFrames++;
 
+    wantSample = true;   // armed; the draw hook takes the reading mid-frame
+
     if (now - winStart >= 1000) {
       fps = Math.round(winFrames * 1000 / (now - winStart));
       const dpf = Math.round(counters.draws / Math.max(1, winFrames));
@@ -68,14 +104,19 @@ export function start(canvas) {
       counters.draws = 0; winFrames = 0; winStart = now;
       // backing size is read live — the renderer resizes it after startup
       const backing = canvas ? canvas.width + 'x' + canvas.height : 'n/a';
+      lumSwing = lumMax - lumMin;
       box.textContent =
         'fps ' + fps + '   draws/f ' + dpf + '   scroll ' + Math.round(scrollY) + '\n' +
         'worst ' + Math.round(worst) + 'ms  (last1s ' + Math.round(worstWin) + 'ms)\n' +
         'janks>100ms ' + janks + '   CTX LOST ' + lost + ' / restored ' + restored + '\n' +
+        'PIXELS lum ' + lumNow.toFixed(1) + '  SWING ' + lumSwing.toFixed(1) + ' /255\n' +
         'dpr ' + (devicePixelRatio || 1) + '  backing ' + backing + '  aa ' + aa + '\n' +
         'gpu ' + gpu;
-      worstWin = 0;
+      worstWin = 0; lumMin = 999; lumMax = -1;
     }
+    // re-register LAST so this callback runs after the stage's own rAF each
+    // frame — otherwise the pixels sampled above are the previous frame's.
+    requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 }

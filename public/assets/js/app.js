@@ -122,6 +122,16 @@ let lastSY = scrollY, svT = 0, svV = 0;
 addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 addEventListener('resize', () => { syncHeaderMetrics(); onScroll(); });
 
+/* Temporary on-device A/B switch: ?nobf=1 strips every backdrop-filter on the
+   page. The nav's blur(20px) sits directly over the fixed WebGL canvas, and a
+   blurred backdrop layer is the other candidate for making Android's compositor
+   rebuild the stack. Inert unless passed; remove once the cause is confirmed. */
+if (/[?&]nobf=1\b/.test(location.search)) {
+  const s = document.createElement('style');
+  s.textContent = '*,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}';
+  document.head.appendChild(s);
+}
+
 /* =============================================================== countdowns */
 const pad = (n) => String(n).padStart(2, '0'), cd = $('#countdown');
 /* Temporary on-device A/B switch for the mobile landing-page blink:
