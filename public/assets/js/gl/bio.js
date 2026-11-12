@@ -1,6 +1,6 @@
 /* Scientific model builders. Each returns { group, update(t, dt) } in local units (≈1 = object radius). */
 import {
-  THREE, TAU, LOW, rng, gauss, lerp, clamp, sstep, GLSL_NOISE, makePoints, pointsMaterial, glowSprite, setSegment, hsl,
+  THREE, TAU, LOW, FRAGILE_FX, rng, gauss, lerp, clamp, sstep, GLSL_NOISE, makePoints, pointsMaterial, glowSprite, setSegment, hsl,
 } from './common.js';
 
 /* =========================================================================
@@ -35,7 +35,7 @@ export function makeCell() {
   // and core count, which are a proxy for the GPU rather than a measure of it;
   // a wide-screen machine with a weak or unusual GPU could still be affected.
   // Dropping the term also lets the fragment shader skip the noise library.
-  const SPECKLE = !LOW;
+  const SPECKLE = !FRAGILE_FX;
   const memFS = /* glsl */`${SPECKLE ? GLSL_NOISE : ''}
     uniform vec3 uA; uniform vec3 uB; uniform float uBase;${SPECKLE ? ' uniform float uTime;' : ''} varying vec3 vN; varying vec3 vV;${SPECKLE ? ' varying vec3 vP;' : ''}
     void main(){

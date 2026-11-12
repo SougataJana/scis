@@ -8,7 +8,21 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 export { THREE };
 export const TAU = Math.PI * 2;
 export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-export const LOW = innerWidth < 760 || (navigator.hardwareConcurrency || 8) <= 4;
+const CORES = navigator.hardwareConcurrency || 8;
+/* Two separate questions, previously conflated into one flag.
+
+   LOW asks "can this machine push the detail" — it gates geometry subdivision,
+   particle counts, bloom strength and pixel ratio across every scene. It is now
+   keyed on cores alone: a phone is not short of GPU power merely for having a
+   narrow screen, and keying it on width meant phones lost detail everywhere,
+   in scenes that were never the problem.
+
+   FRAGILE_FX asks a different question: "is this effect known to break here".
+   It stays keyed on viewport too, because the one effect it gates — the
+   membrane speckle — flickered on a phone that was holding 61fps at the time.
+   That was never about speed, so a fast phone must still be excluded. */
+export const LOW = CORES <= 4;
+export const FRAGILE_FX = innerWidth < 760 || CORES <= 4;
 export const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 export const lerp = (a, b, t) => a + (b - a) * t;
 export const sstep = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };
