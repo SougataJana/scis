@@ -122,33 +122,14 @@ let lastSY = scrollY, svT = 0, svV = 0;
 addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 addEventListener('resize', () => { syncHeaderMetrics(); onScroll(); });
 
-/* Temporary on-device A/B switch: ?nobf=1 strips every backdrop-filter on the
-   page. The nav's blur(20px) sits directly over the fixed WebGL canvas, and a
-   blurred backdrop layer is the other candidate for making Android's compositor
-   rebuild the stack. Inert unless passed; remove once the cause is confirmed. */
-if (/[?&]nobf=1\b/.test(location.search)) {
-  const s = document.createElement('style');
-  s.textContent = '*,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}';
-  document.head.appendChild(s);
-}
-
 /* =============================================================== countdowns */
 const pad = (n) => String(n).padStart(2, '0'), cd = $('#countdown');
-/* Temporary on-device A/B switch for the mobile landing-page blink:
-   ?cd=off     stops the countdown entirely (no per-second DOM work)
-   ?cd=noflip  keeps the numbers updating but skips the flip animation and the
-               forced reflow below.
-   Both inert unless passed; remove once the cause is confirmed. */
-const cdMode = new URLSearchParams(location.search).get('cd');
 function tickCd() {
   const ms = Math.max(0, new Date(SCIS.start) - Date.now()), s = Math.floor(ms / 1000);
   const v = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
-  // `void b.offsetWidth` forces a synchronous layout to restart the CSS
-  // animation. That, plus the flip keyframe's animated filter: blur(), runs
-  // once a second directly over a fixed full-screen WebGL canvas.
-  for (const k in v) { const b = $(`[data-u="${k}"]`, cd), txt = pad(v[k]); if (b && b.textContent !== txt) { b.textContent = txt; if (!reduce && cdMode !== 'noflip') { b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); } } }
+  for (const k in v) { const b = $(`[data-u="${k}"]`, cd), txt = pad(v[k]); if (b && b.textContent !== txt) { b.textContent = txt; if (!reduce) { b.classList.remove('flip'); void b.offsetWidth; b.classList.add('flip'); } } }
 }
-if (cd && cdMode !== 'off') { tickCd(); setInterval(tickCd, 1000); }
+if (cd) { tickCd(); setInterval(tickCd, 1000); }
 $$('[data-deadline]').forEach((el) => {
   const end = new Date(SCIS[el.dataset.deadline]), total = 30 * 86400000, left = Math.max(0, end - Date.now());
   const days = Math.floor(left / 86400000), bar_ = $('.bar', el);

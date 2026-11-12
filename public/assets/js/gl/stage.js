@@ -53,21 +53,8 @@ export function createStage(canvas) {
     return anchors[anchors.length - 1].s;
   }
 
-  let lastW = 0, lastH = 0;
   function resize() {
-    const newW = innerWidth, newH = innerHeight;
-    // Mobile browsers (Android Chrome in particular) hide/show their address
-    // bar while the page is scrolled, which fires a 'resize' event and changes
-    // innerHeight by the bar's height without changing innerWidth. Rebuilding
-    // the renderer/composer framebuffers on every one of those events is what
-    // produced the visible "blink" on phones — a real resize (orientation
-    // change, actual window resize) always changes the width too, so treat a
-    // width-unchanged, modest height-only change as browser-chrome noise and
-    // skip the GL resize for it.
-    const chromeToggle = lastW > 0 && newW === lastW && Math.abs(newH - lastH) < 160;
-    lastW = newW; lastH = newH;
-    W = newW; H = newH;
-    if (chromeToggle) { measure(); return; }
+    W = innerWidth; H = innerHeight;
     // on some hosts the very first layout pass can momentarily report a 0 (or stale)
     // viewport size before the browser has finished its first paint; sizing the
     // renderer/composer to that leaves their framebuffers permanently zero-sized
@@ -140,14 +127,14 @@ export function createStage(canvas) {
     }
     updatePointScale(renderer, camera); composer.render();
 
-    // adaptive quality — desktop only. On phones/low-core devices this already
-    // starts at a conservative pixelRatio (see makeRenderer), and forcing a
-    // mid-session framebuffer reallocation (setPixelRatio + full resize) here
-    // is what produced a visible flash shortly after the page loaded, while
-    // the visitor is sitting on the landing page and the first ~90 frames are
-    // still averaging out. Desktops rarely hit this path in the first place,
-    // so skipping it for LOW removes the flash without losing the recovery
-    // this was built for (heavy multi-tab/dual-GPU desktop sessions).
+    // adaptive quality — desktop only. Dropping the pixel ratio mid-session
+    // reallocates the renderer's and composer's framebuffers, which costs a
+    // visible flash at the moment it fires. Phones already start at a
+    // conservative ratio (see makeRenderer) so there is little left for this
+    // to reclaim there, and they are the devices most likely to trip the
+    // threshold and pay the flash. Desktops rarely reach it at all, so it is
+    // kept for them, where it was built to recover from heavy multi-tab or
+    // dual-GPU sessions.
     if (!LOW) {
       acc += dt; frames++;
       if (frames === 90) {
@@ -170,8 +157,8 @@ export function createStage(canvas) {
      heavy WebGL tabs open at once, the context can drop for a moment; without handling this
      the canvas just goes black or flashes stale frames until reload. Pause cleanly and pick
      the render loop back up once the browser hands the context back. */
-  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); paused = true; console.warn('[stage] WebGL context lost'); }, false);
-  canvas.addEventListener('webglcontextrestored', () => { degraded = false; frames = 0; acc = 0; resize(); paused = false; console.warn('[stage] WebGL context restored'); }, false);
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); paused = true; }, false);
+  canvas.addEventListener('webglcontextrestored', () => { degraded = false; frames = 0; acc = 0; resize(); paused = false; }, false);
 
   resize();
   renderer.compile(scene, camera);

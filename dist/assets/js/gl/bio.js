@@ -7,19 +7,10 @@ import {
    CELL — fresnel membrane, nucleus with chromatin, mitochondria with cristae,
    ER, Golgi, ribosomes, vesicles
    ========================================================================= */
-/* Temporary on-device bisection for the mobile "only the cell blinks" report:
-   ?cellhide=<groups> leaves the named sub-systems out of the cell, so the
-   affected phone can narrow the flicker to one of them. Comma-separated:
-     mem  membrane shells + haze      nuc  nucleus, nucleolus, chromatin
-     org  ER, mitochondria, Golgi     pts  ribosome points + vesicles
-   Inert unless passed. Remove once the culprit is known. */
-const _twrap = /[?&]twrap=1\b/.test(location.search);
-const _hide = new Set((new URLSearchParams(location.search).get('cellhide') || '').split(',').filter(Boolean));
 
 export function makeCell() {
   const group = new THREE.Group(), R = rng(7), parts = {};
   const uTime = { value: 0 };
-  const show = (k) => !_hide.has(k);
 
   // outer membrane (additive fresnel glass) + faint inner wall
   const memVS = /* glsl */`${GLSL_NOISE}
@@ -32,82 +23,35 @@ export function makeCell() {
       vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz);
       gl_Position = projectionMatrix*mv;
     }`;
-  const memFS = /* glsl */`${GLSL_NOISE}
-    uniform vec3 uA; uniform vec3 uB; uniform float uBase; uniform float uTime; varying vec3 vN; varying vec3 vV; varying vec3 vP;
+  // The receptor-speckle highlight that used to live here was removed: it made
+  // the cell flicker hard on some Android GPUs (confirmed on an Adreno 619,
+  // where whole frames came out black at roughly 30Hz while the frame rate
+  // still read a healthy 61fps). It was the brightest, highest-frequency thing
+  // in the scene, and bloom amplified it -- removing either the speckle or the
+  // bloom cured it, while changing how the noise was computed (per-vertex,
+  // cheaper noise, broader falloff, forced highp) did not, so the trigger was
+  // the bright contribution itself rather than its cost or precision. The rim
+  // fresnel below carries the membrane's look on its own.
+  const memFS = /* glsl */`
+    uniform vec3 uA; uniform vec3 uB; uniform float uBase; varying vec3 vN; varying vec3 vV;
     void main(){
       float f = 1.0 - abs(dot(normalize(vN), normalize(vV)));
       float rim = pow(f, 2.0);
-      float sp = snoise(vP*9. + uTime*.15)*.5+.5;           // receptor speckle
-      vec3 c = mix(uA, uB, rim) + vec3(.35,.55,.75)*pow(f,5.) + vec3(.9,.95,1.)*pow(sp,6.)*.18*rim;
+      vec3 c = mix(uA, uB, rim) + vec3(.35,.55,.75)*pow(f,5.);
       gl_FragColor = vec4(c*.8, clamp(uBase + rim*.42, 0., 1.));
     }`;
-  /* Temporary on-device tests for the membrane flicker:
-       ?memhp=1      force highp on this material
-       ?nospeckle=1  drop the pow(snoise(...),6.) term from the fragment shader
-     The noise's permute() computes ((x*34)+1)*x with x up to 289 (~2.84e6),
-     far past mediump's 65504 ceiling, so on a driver that gives fragment
-     shaders mediump it overflows and returns garbage that differs per frame.
-     The membrane raises that sample to the 6th power, which amplifies the
-     instability into a visible flicker; the nucleus only squares it, which is
-     why it looks stable. Remove both switches once the fix is settled. */
-  /* Candidate fixes for the per-pixel cost of the speckle term. The device
-     reports full highp (fragHigh 23) and forcing highp changes nothing, but
-     dropping the snoise call clears the flicker, so the problem is how
-     expensive that call is per fragment, not its precision: full 3D simplex
-     noise over a near-fullscreen translucent sphere, twice (two shells).
-       ?vertspeckle=1  same noise, evaluated per vertex and interpolated
-                       (~21k vertices instead of ~670k fragments x2)
-       ?cheapnoise=1   per-pixel still, but a hash-based value noise costing
-                       a fraction of simplex
-     Both keep the rim sparkle; nospeckle removes it outright. */
-  const _q2 = new URLSearchParams(location.search);
-  // ?specklemul=<n> scales the speckle's brightness (default 1). Any non-zero
-  // speckle flickers and zero is clean, while how the noise is computed makes
-  // no difference - so what matters is how bright this term gets, not its cost.
-  // Dimming it tests whether the trigger is bright pixels crossing the bloom
-  // threshold rather than the speckle as such.
-  const _spMul = parseFloat(_q2.get('specklemul'));
-  const SPECKLE_SRC = 'float sp = snoise(vP*9. + uTime*.15)*.5+.5;';
-  const CHEAP_NOISE = `
-    float hash31(vec3 p){ p=fract(p*.1031); p+=dot(p,p.yzx+33.33); return fract((p.x+p.y)*p.z); }
-    float vnoise(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
-      return mix(mix(mix(hash31(i),hash31(i+vec3(1,0,0)),f.x),mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x),f.y),
-                 mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z); }`;
-  let _memFS = memFS, _memVS = memVS;
-  if (Number.isFinite(_spMul)) _memFS = _memFS.replace('pow(sp,6.)*.18*rim', 'pow(sp,6.)*' + (0.18 * _spMul).toFixed(4) + '*rim');
-  // ?softspeckle=1 keeps a visible rim sparkle but broadens it. A 6th power
-  // leaves only sp near 1, i.e. isolated sub-pixel points, which is exactly
-  // what aliases when bloom downsamples into its fixed 256x256 mip chain.
-  // A smoothstep ramp lights a wider, softer band that survives downsampling
-  // stably, at similar perceived brightness.
-  if (_q2.get('softspeckle') === '1') _memFS = _memFS.replace('pow(sp,6.)*.18*rim', 'smoothstep(.55,1.,sp)*.10*rim');
-  if (_q2.get('nospeckle') === '1') {
-    _memFS = memFS.replace(SPECKLE_SRC, 'float sp = 0.0;');
-  } else if (_q2.get('vertspeckle') === '1') {
-    _memVS = memVS.replace('varying vec3 vP;', 'varying vec3 vP; varying float vSp;')
-      .replace('p += normal*n; vP = p;', 'p += normal*n; vP = p; vSp = snoise(p*9. + uTime*.15)*.5+.5;');
-    _memFS = memFS.replace('varying vec3 vP;', 'varying vec3 vP; varying float vSp;')
-      .replace(SPECKLE_SRC, 'float sp = vSp;');
-  } else if (_q2.get('cheapnoise') === '1') {
-    // helpers must go ABOVE main(); GLSL has no nested function definitions
-    _memFS = memFS.replace('void main(){', CHEAP_NOISE + '\n    void main(){')
-      .replace(SPECKLE_SRC, 'float sp = vnoise(vP*9. + uTime*.15);');
-  }
-  const _memHP = /[?&]memhp=1\b/.test(location.search);
   const mkMem = (side, base, a, b) => new THREE.ShaderMaterial({
-    vertexShader: _memVS, fragmentShader: _memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
-    ...(_memHP ? { precision: 'highp' } : {}),
+    vertexShader: memVS, fragmentShader: memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
     uniforms: { uTime, uBase: { value: base }, uA: { value: new THREE.Color(a) }, uB: { value: new THREE.Color(b) } },
   });
   const memGeo = new THREE.IcosahedronGeometry(1, LOW ? 18 : 30);
   parts.memOuter = new THREE.Mesh(memGeo, mkMem(THREE.FrontSide, .03, 0x0a3a48, 0x5fd0e0));
   parts.memInner = new THREE.Mesh(memGeo, mkMem(THREE.BackSide, .02, 0x062a34, 0x2a9fb4));
   parts.memOuter.renderOrder = 5;
-  if (show('mem') && show('shell') && show('shellin')) group.add(parts.memInner);
-  if (show('mem') && show('shell') && show('shellout')) group.add(parts.memOuter);
+  group.add(parts.memInner, parts.memOuter);
 
   // cytoplasm haze
-  const haze = glowSprite(0x2fb4c8, 3.2, .05); if (show('mem') && show('haze')) group.add(haze);
+  const haze = glowSprite(0x2fb4c8, 3.2, .05); group.add(haze);
 
   // nucleus
   const nucVS = /* glsl */`${GLSL_NOISE}
@@ -127,9 +71,9 @@ export function makeCell() {
   parts.nucleus = new THREE.Mesh(new THREE.IcosahedronGeometry(.36, LOW ? 12 : 22), new THREE.ShaderMaterial({
     vertexShader: nucVS, fragmentShader: nucFS, transparent: true, uniforms: { uTime },
   }));
-  if (show('nuc')) group.add(parts.nucleus);
+  group.add(parts.nucleus);
   const nucleolus = new THREE.Mesh(new THREE.SphereGeometry(.09, 24, 16), new THREE.MeshStandardMaterial({ color: 0xffdca0, emissive: 0xff9a3c, emissiveIntensity: .8, roughness: .4 }));
-  nucleolus.position.set(.06, .04, .1); if (show('nuc')) group.add(nucleolus);
+  nucleolus.position.set(.06, .04, .1); group.add(nucleolus);
   // chromatin fibres around the nucleus
   const chrom = new THREE.Group();
   for (let k = 0; k < 7; k++) {
@@ -138,7 +82,7 @@ export function makeCell() {
     const t = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 120, .006, 5, true), new THREE.MeshBasicMaterial({ color: new THREE.Color().setHSL(.07 + R() * .04, 1, .62), transparent: true, opacity: .5, blending: THREE.AdditiveBlending, depthWrite: false }));
     chrom.add(t);
   }
-  if (show('nuc')) group.add(chrom); parts.chrom = chrom;
+  group.add(chrom); parts.chrom = chrom;
 
   // endoplasmic reticulum — displaced wireframe shells
   const er = new THREE.Group();
@@ -148,7 +92,7 @@ export function makeCell() {
     const m = new THREE.LineSegments(new THREE.WireframeGeometry(g), new THREE.LineBasicMaterial({ color: k % 2 ? 0x56e0ff : 0x7fe9c8, transparent: true, opacity: .2, blending: THREE.AdditiveBlending, depthWrite: false }));
     m.rotation.set(R() * 3, R() * 3, 0); er.add(m);
   }
-  if (show('org')) group.add(er); parts.er = er;
+  group.add(er); parts.er = er;
 
   // mitochondria (capsule + cristae)
   const mito = [];
@@ -159,12 +103,12 @@ export function makeCell() {
     const g = new THREE.Group(), body = new THREE.Mesh(capGeo, outerMat); g.add(body);
     for (let k = -3; k <= 3; k++) { const c = new THREE.Mesh(new THREE.TorusGeometry(.038, .006, 6, 18, Math.PI * 1.5), cristaMat); c.position.y = k * .03; c.rotation.set(Math.PI / 2, 0, k * 1.3); g.add(c); }
     g.userData = { a: i / 8 * TAU, d: .6 + R() * .16, sp: (.05 + R() * .06) * (i % 2 ? 1 : -1), y: (R() - .5) * .5, ph: R() * 6 };
-    mito.push(g); if (show('org')) group.add(g);
+    mito.push(g); group.add(g);
   }
   // Golgi
   const golgi = new THREE.Group(), gMat = new THREE.MeshPhysicalMaterial({ color: 0xa88bff, roughness: .35, clearcoat: .8, emissive: 0x2c1a6a, emissiveIntensity: .7 });
   for (let k = 0; k < 5; k++) { const arc = new THREE.Mesh(new THREE.TorusGeometry(.15 - k * .012, .016, 8, 32, Math.PI * 1.25), gMat); arc.position.y = k * .045 - .09; arc.rotation.x = Math.PI / 2; golgi.add(arc); }
-  golgi.position.set(.42, -.22, .3); golgi.rotation.set(.4, .6, 0); if (show('org')) group.add(golgi);
+  golgi.position.set(.42, -.22, .3); golgi.rotation.set(.4, .6, 0); group.add(golgi);
 
   // ribosomes / vesicles
   const nR = LOW ? 260 : 520, rp = new Float32Array(nR * 3), rc = new Float32Array(nR * 3), rs = new Float32Array(nR), rbase = new Float32Array(nR * 3);
@@ -173,14 +117,14 @@ export function makeCell() {
     rbase.set([v.x, v.y, v.z], i * 3); rp.set([v.x, v.y, v.z], i * 3);
     const c = hsl(180 + R() * 50, .7, .75); rc.set([c.r, c.g, c.b], i * 3); rs[i] = .5 + R() * 1.3;
   }
-  const ribo = makePoints(rp, rc, rs, pointsMaterial({ size: .028, opacity: .95 })); if (show('pts')) group.add(ribo);
+  const ribo = makePoints(rp, rc, rs, pointsMaterial({ size: .028, opacity: .95 })); group.add(ribo);
   const vesMat = new THREE.MeshPhysicalMaterial({ color: 0x86b6ff, roughness: .1, clearcoat: 1, transparent: true, opacity: .55, emissive: 0x1a3a7a, emissiveIntensity: .6 });
   const ves = [];
-  for (let i = 0; i < 12; i++) { const v = new THREE.Mesh(new THREE.SphereGeometry(.022 + R() * .03, 18, 14), vesMat); v.userData = { a: R() * TAU, b: R() * TAU, d: .5 + R() * .38, sp: .05 + R() * .12 }; ves.push(v); if (show('pts')) group.add(v); }
+  for (let i = 0; i < 12; i++) { const v = new THREE.Mesh(new THREE.SphereGeometry(.022 + R() * .03, 18, 14), vesMat); v.userData = { a: R() * TAU, b: R() * TAU, d: .5 + R() * .38, sp: .05 + R() * .12 }; ves.push(v); group.add(v); }
 
   const tmp = new THREE.Vector3();
   function update(t, dt) {
-    uTime.value = _twrap ? t % 60 : t;
+    uTime.value = t;
     parts.nucleus.rotation.y = t * .04; chrom.rotation.set(t * .03, t * .05, 0); er.rotation.y = t * .02; er.rotation.x = t * .015;
     mito.forEach((m) => {
       const u = m.userData; u.a += u.sp * dt;

@@ -23,27 +23,9 @@ export function updatePointScale(renderer, camera) {
   POINT_SCALE.value = h / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
 }
 
-/* Temporary on-device A/B overrides, to settle the mobile "blink" empirically:
-   ?aa=1|0 forces antialias, ?pr=<n> overrides the pixel-ratio cap. Inert unless
-   the params are present. Remove both once the right defaults are confirmed. */
-const _dbgQuery = new URLSearchParams(location.search);
-const _dbgAA = _dbgQuery.get('aa'), _dbgPR = parseFloat(_dbgQuery.get('pr'));
-
-export function makeRenderer(canvas, { alpha = false, antialias = !LOW } = {}) {
-  // Antialiasing is what keeps the cell's hairline geometry (wireframe shells,
-  // .006-radius chromatin/cristae tubes, ribosome points) from scintillating as
-  // the scene rotates: without it, sub-pixel-thin bright additive lines pop on
-  // and off between frames, which reads as flickering rather than as aliasing.
-  // It was defaulted off for LOW on the theory that MSAA memory pressure was
-  // causing context loss on budget GPUs — on-device measurement disproved that
-  // (Adreno 619: 61fps, zero context losses), so the cost was being paid for
-  // nothing. Kept overridable while the correct default is confirmed on device.
-  if (_dbgAA !== null) antialias = _dbgAA === "1";
+export function makeRenderer(canvas, { alpha = false, antialias = true } = {}) {
   const r = new THREE.WebGLRenderer({ canvas, antialias, alpha, powerPreference: 'high-performance' });
-  // A low cap upscales the canvas to the screen (e.g. 1.0 on a dpr-1.75 phone is
-  // a 1.75x stretch), which coarsens exactly that same thin geometry.
-  const cap = Number.isFinite(_dbgPR) ? _dbgPR : (LOW ? 1 : 1.75);
-  r.setPixelRatio(Math.min(devicePixelRatio || 1, cap));
+  r.setPixelRatio(Math.min(devicePixelRatio || 1, LOW ? 1.25 : 1.75));
   r.toneMapping = THREE.ACESFilmicToneMapping;
   r.toneMappingExposure = .95;
   return r;
@@ -55,16 +37,6 @@ export function makeComposer(renderer, scene, camera, { strength = .8, radius = 
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), strength, radius, threshold);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
-  /* Temporary on-device A/B: ?nobloom=1 skips the bloom pass, ?bloomthr=<n>
-     moves its luminance threshold. Hiding every cell part stopped the mobile
-     flicker while removing any single one did not, so the cause is shared by
-     all of them — bloom is what they all feed, it only does visible work where
-     there is bright content (hence cell-only), and its half-float targets and
-     threshold are both known sources of driver-specific artefacts (hence some
-     phones and not others). Inert unless passed; remove once confirmed. */
-  if (/[?&]nobloom=1\b/.test(location.search)) bloom.enabled = false;
-  const thr = parseFloat(new URLSearchParams(location.search).get('bloomthr'));
-  if (Number.isFinite(thr)) bloom.threshold = thr;
   return { composer, bloom };
 }
 
