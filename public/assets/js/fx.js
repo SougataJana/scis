@@ -3,6 +3,13 @@
   'use strict';
   const TAU = Math.PI * 2;
   const cv = document.getElementById('fx'); if (!cv) return;
+  /* Temporary on-device A/B switch: ?nofx=1 removes this overlay entirely.
+     Even when idle and fully transparent, #fx is a full-screen fixed canvas at
+     z-index 300 sitting permanently above the WebGL stage, so the compositor
+     carries a second large layer over the GL surface for the whole page life.
+     Android compositor behaviour there varies by driver, which fits a blink
+     that appears on some phones and not others. Remove once confirmed. */
+  if (/[?&]nofx=1\b/.test(location.search)) { cv.remove(); return; }
   const ctx = cv.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let W = 0, H = 0, DPR = 1, running = false, last = 0;
