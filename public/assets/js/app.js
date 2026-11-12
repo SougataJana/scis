@@ -276,6 +276,11 @@ async function boot() {
   const reveal = () => { if (loader && !loader.classList.contains('out')) { loader.classList.add('out'); setTimeout(() => loader.remove(), 900); } finishIntro(); };
   setTimeout(reveal, 8000); // failsafe — never leave the page hidden
   const fonts = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1800))]);
+  // opt-in on-device diagnostic (?debug=gl) — see gldebug.js. Loaded before the
+  // stage so it can count draw calls from the first frame; absent otherwise.
+  if (/[?&]debug=gl\b/.test(location.search)) {
+    try { (await import('./gldebug.js')).start($('#stage')); } catch (e) { console.warn('gl debug unavailable', e); }
+  }
   try {
     // relative to THIS module (assets/js/app.js), matching the modulepreload link's URL
     // (which is relative to the document root instead) so both hit the same cache entry.
