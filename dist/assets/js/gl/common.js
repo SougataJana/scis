@@ -23,16 +23,27 @@ export function updatePointScale(renderer, camera) {
   POINT_SCALE.value = h / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
 }
 
+/* Temporary on-device A/B overrides, to settle the mobile "blink" empirically:
+   ?aa=1|0 forces antialias, ?pr=<n> overrides the pixel-ratio cap. Inert unless
+   the params are present. Remove both once the right defaults are confirmed. */
+const _dbgQuery = new URLSearchParams(location.search);
+const _dbgAA = _dbgQuery.get('aa'), _dbgPR = parseFloat(_dbgQuery.get('pr'));
+
 export function makeRenderer(canvas, { alpha = false, antialias = !LOW } = {}) {
-  // MSAA roughly doubles-to-quadruples the framebuffer memory/bandwidth the
-  // GPU driver needs per frame. On budget mobile GPUs (weak Mali/PowerVR
-  // parts common on sub-₹15k Android phones) that's a realistic trigger for
-  // the browser silently dropping and restoring the WebGL context under
-  // memory pressure — which shows up to the visitor as a repeating blink of
-  // the canvas, not a one-time flash. Default it off for LOW/mobile devices;
-  // an explicit antialias option (if ever passed) still wins.
+  // Antialiasing is what keeps the cell's hairline geometry (wireframe shells,
+  // .006-radius chromatin/cristae tubes, ribosome points) from scintillating as
+  // the scene rotates: without it, sub-pixel-thin bright additive lines pop on
+  // and off between frames, which reads as flickering rather than as aliasing.
+  // It was defaulted off for LOW on the theory that MSAA memory pressure was
+  // causing context loss on budget GPUs — on-device measurement disproved that
+  // (Adreno 619: 61fps, zero context losses), so the cost was being paid for
+  // nothing. Kept overridable while the correct default is confirmed on device.
+  if (_dbgAA !== null) antialias = _dbgAA === "1";
   const r = new THREE.WebGLRenderer({ canvas, antialias, alpha, powerPreference: 'high-performance' });
-  r.setPixelRatio(Math.min(devicePixelRatio || 1, LOW ? 1 : 1.75));
+  // A low cap upscales the canvas to the screen (e.g. 1.0 on a dpr-1.75 phone is
+  // a 1.75x stretch), which coarsens exactly that same thin geometry.
+  const cap = Number.isFinite(_dbgPR) ? _dbgPR : (LOW ? 1 : 1.75);
+  r.setPixelRatio(Math.min(devicePixelRatio || 1, cap));
   r.toneMapping = THREE.ACESFilmicToneMapping;
   r.toneMappingExposure = .95;
   return r;
