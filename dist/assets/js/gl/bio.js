@@ -75,6 +75,12 @@ export function makeCell() {
                  mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z); }`;
   let _memFS = memFS, _memVS = memVS;
   if (Number.isFinite(_spMul)) _memFS = _memFS.replace('pow(sp,6.)*.18*rim', 'pow(sp,6.)*' + (0.18 * _spMul).toFixed(4) + '*rim');
+  // ?softspeckle=1 keeps a visible rim sparkle but broadens it. A 6th power
+  // leaves only sp near 1, i.e. isolated sub-pixel points, which is exactly
+  // what aliases when bloom downsamples into its fixed 256x256 mip chain.
+  // A smoothstep ramp lights a wider, softer band that survives downsampling
+  // stably, at similar perceived brightness.
+  if (_q2.get('softspeckle') === '1') _memFS = _memFS.replace('pow(sp,6.)*.18*rim', 'smoothstep(.55,1.,sp)*.10*rim');
   if (_q2.get('nospeckle') === '1') {
     _memFS = memFS.replace(SPECKLE_SRC, 'float sp = 0.0;');
   } else if (_q2.get('vertspeckle') === '1') {
