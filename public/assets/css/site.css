@@ -29,7 +29,7 @@ main, footer, .nav { position: relative; z-index: 2; }
 
 /* nav — a single full-width row: brand, centered pill (links + register), gov marks */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 115; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 14px clamp(16px, 3vw, 36px); border-bottom: 1px solid transparent; transition: background .4s, border-color .4s, backdrop-filter .4s; }
-.nav.solid { background: rgba(4, 16, 22, .6); border-color: var(--line); backdrop-filter: blur(20px) saturate(150%); }
+.nav.solid { background: rgba(4, 16, 22, .6); border-color: rgba(140, 230, 245, .06); backdrop-filter: blur(20px) saturate(150%); }
 .nav .brand { justify-self: start; }
 .nav .idbar-gov { justify-self: end; }
 .nav-pill { justify-self: center; position: relative; display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 20px; border-radius: 999px; border: 1px solid var(--line); background: rgba(9, 28, 36, .4); }
