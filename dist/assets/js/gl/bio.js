@@ -7,9 +7,18 @@ import {
    CELL — fresnel membrane, nucleus with chromatin, mitochondria with cristae,
    ER, Golgi, ribosomes, vesicles
    ========================================================================= */
+/* Temporary on-device bisection for the mobile "only the cell blinks" report:
+   ?cellhide=<groups> leaves the named sub-systems out of the cell, so the
+   affected phone can narrow the flicker to one of them. Comma-separated:
+     mem  membrane shells + haze      nuc  nucleus, nucleolus, chromatin
+     org  ER, mitochondria, Golgi     pts  ribosome points + vesicles
+   Inert unless passed. Remove once the culprit is known. */
+const _hide = new Set((new URLSearchParams(location.search).get('cellhide') || '').split(',').filter(Boolean));
+
 export function makeCell() {
   const group = new THREE.Group(), R = rng(7), parts = {};
   const uTime = { value: 0 };
+  const show = (k) => !_hide.has(k);
 
   // outer membrane (additive fresnel glass) + faint inner wall
   const memVS = /* glsl */`${GLSL_NOISE}
@@ -38,10 +47,10 @@ export function makeCell() {
   const memGeo = new THREE.IcosahedronGeometry(1, LOW ? 18 : 30);
   parts.memOuter = new THREE.Mesh(memGeo, mkMem(THREE.FrontSide, .03, 0x0a3a48, 0x5fd0e0));
   parts.memInner = new THREE.Mesh(memGeo, mkMem(THREE.BackSide, .02, 0x062a34, 0x2a9fb4));
-  parts.memOuter.renderOrder = 5; group.add(parts.memInner, parts.memOuter);
+  parts.memOuter.renderOrder = 5; if (show('mem')) group.add(parts.memInner, parts.memOuter);
 
   // cytoplasm haze
-  const haze = glowSprite(0x2fb4c8, 3.2, .05); group.add(haze);
+  const haze = glowSprite(0x2fb4c8, 3.2, .05); if (show('mem')) group.add(haze);
 
   // nucleus
   const nucVS = /* glsl */`${GLSL_NOISE}
@@ -61,9 +70,9 @@ export function makeCell() {
   parts.nucleus = new THREE.Mesh(new THREE.IcosahedronGeometry(.36, LOW ? 12 : 22), new THREE.ShaderMaterial({
     vertexShader: nucVS, fragmentShader: nucFS, transparent: true, uniforms: { uTime },
   }));
-  group.add(parts.nucleus);
+  if (show('nuc')) group.add(parts.nucleus);
   const nucleolus = new THREE.Mesh(new THREE.SphereGeometry(.09, 24, 16), new THREE.MeshStandardMaterial({ color: 0xffdca0, emissive: 0xff9a3c, emissiveIntensity: .8, roughness: .4 }));
-  nucleolus.position.set(.06, .04, .1); group.add(nucleolus);
+  nucleolus.position.set(.06, .04, .1); if (show('nuc')) group.add(nucleolus);
   // chromatin fibres around the nucleus
   const chrom = new THREE.Group();
   for (let k = 0; k < 7; k++) {
@@ -72,7 +81,7 @@ export function makeCell() {
     const t = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 120, .006, 5, true), new THREE.MeshBasicMaterial({ color: new THREE.Color().setHSL(.07 + R() * .04, 1, .62), transparent: true, opacity: .5, blending: THREE.AdditiveBlending, depthWrite: false }));
     chrom.add(t);
   }
-  group.add(chrom); parts.chrom = chrom;
+  if (show('nuc')) group.add(chrom); parts.chrom = chrom;
 
   // endoplasmic reticulum — displaced wireframe shells
   const er = new THREE.Group();
@@ -82,7 +91,7 @@ export function makeCell() {
     const m = new THREE.LineSegments(new THREE.WireframeGeometry(g), new THREE.LineBasicMaterial({ color: k % 2 ? 0x56e0ff : 0x7fe9c8, transparent: true, opacity: .2, blending: THREE.AdditiveBlending, depthWrite: false }));
     m.rotation.set(R() * 3, R() * 3, 0); er.add(m);
   }
-  group.add(er); parts.er = er;
+  if (show('org')) group.add(er); parts.er = er;
 
   // mitochondria (capsule + cristae)
   const mito = [];
@@ -93,12 +102,12 @@ export function makeCell() {
     const g = new THREE.Group(), body = new THREE.Mesh(capGeo, outerMat); g.add(body);
     for (let k = -3; k <= 3; k++) { const c = new THREE.Mesh(new THREE.TorusGeometry(.038, .006, 6, 18, Math.PI * 1.5), cristaMat); c.position.y = k * .03; c.rotation.set(Math.PI / 2, 0, k * 1.3); g.add(c); }
     g.userData = { a: i / 8 * TAU, d: .6 + R() * .16, sp: (.05 + R() * .06) * (i % 2 ? 1 : -1), y: (R() - .5) * .5, ph: R() * 6 };
-    mito.push(g); group.add(g);
+    mito.push(g); if (show('org')) group.add(g);
   }
   // Golgi
   const golgi = new THREE.Group(), gMat = new THREE.MeshPhysicalMaterial({ color: 0xa88bff, roughness: .35, clearcoat: .8, emissive: 0x2c1a6a, emissiveIntensity: .7 });
   for (let k = 0; k < 5; k++) { const arc = new THREE.Mesh(new THREE.TorusGeometry(.15 - k * .012, .016, 8, 32, Math.PI * 1.25), gMat); arc.position.y = k * .045 - .09; arc.rotation.x = Math.PI / 2; golgi.add(arc); }
-  golgi.position.set(.42, -.22, .3); golgi.rotation.set(.4, .6, 0); group.add(golgi);
+  golgi.position.set(.42, -.22, .3); golgi.rotation.set(.4, .6, 0); if (show('org')) group.add(golgi);
 
   // ribosomes / vesicles
   const nR = LOW ? 260 : 520, rp = new Float32Array(nR * 3), rc = new Float32Array(nR * 3), rs = new Float32Array(nR), rbase = new Float32Array(nR * 3);
@@ -107,10 +116,10 @@ export function makeCell() {
     rbase.set([v.x, v.y, v.z], i * 3); rp.set([v.x, v.y, v.z], i * 3);
     const c = hsl(180 + R() * 50, .7, .75); rc.set([c.r, c.g, c.b], i * 3); rs[i] = .5 + R() * 1.3;
   }
-  const ribo = makePoints(rp, rc, rs, pointsMaterial({ size: .028, opacity: .95 })); group.add(ribo);
+  const ribo = makePoints(rp, rc, rs, pointsMaterial({ size: .028, opacity: .95 })); if (show('pts')) group.add(ribo);
   const vesMat = new THREE.MeshPhysicalMaterial({ color: 0x86b6ff, roughness: .1, clearcoat: 1, transparent: true, opacity: .55, emissive: 0x1a3a7a, emissiveIntensity: .6 });
   const ves = [];
-  for (let i = 0; i < 12; i++) { const v = new THREE.Mesh(new THREE.SphereGeometry(.022 + R() * .03, 18, 14), vesMat); v.userData = { a: R() * TAU, b: R() * TAU, d: .5 + R() * .38, sp: .05 + R() * .12 }; ves.push(v); group.add(v); }
+  for (let i = 0; i < 12; i++) { const v = new THREE.Mesh(new THREE.SphereGeometry(.022 + R() * .03, 18, 14), vesMat); v.userData = { a: R() * TAU, b: R() * TAU, d: .5 + R() * .38, sp: .05 + R() * .12 }; ves.push(v); if (show('pts')) group.add(v); }
 
   const tmp = new THREE.Vector3();
   function update(t, dt) {
