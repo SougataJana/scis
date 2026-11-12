@@ -9,20 +9,28 @@ export { THREE };
 export const TAU = Math.PI * 2;
 export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const CORES = navigator.hardwareConcurrency || 8;
-/* Two separate questions, previously conflated into one flag.
+const WEAK = CORES <= 4 || innerWidth < 760;
 
-   LOW asks "can this machine push the detail" — it gates geometry subdivision,
-   particle counts, bloom strength and pixel ratio across every scene. It is now
-   keyed on cores alone: a phone is not short of GPU power merely for having a
-   narrow screen, and keying it on width meant phones lost detail everywhere,
-   in scenes that were never the problem.
+/* Detail tier for every scene except the cell. The cell was the only thing
+   that ever misbehaved on weak hardware; DNA, protein, network, galaxy, the
+   session visuals and the specimens were always fine, and were only ever
+   reduced because they shared a flag with it. They now render at full detail
+   everywhere.
 
-   FRAGILE_FX asks a different question: "is this effect known to break here".
-   It stays keyed on viewport too, because the one effect it gates — the
-   membrane speckle — flickered on a phone that was holding 61fps at the time.
-   That was never about speed, so a fast phone must still be excluded. */
-export const LOW = CORES <= 4;
-export const FRAGILE_FX = innerWidth < 760 || CORES <= 4;
+   Left as a named constant rather than deleted from the ~30 call sites, so
+   there is a single place to dial back if a weak device turns out to struggle.
+   stage.js also drops the pixel ratio by itself when frame times get bad, so
+   a device that cannot cope still has a way out - see the adaptive block
+   there, which this now leaves enabled on every device. */
+export const LOW = false;
+
+/* The cell is reduced on phones and weak machines: coarser membrane and
+   nucleus, fewer ribosomes. */
+export const CELL_LOW = WEAK;
+
+/* Separately from speed: the membrane speckle flickered on a phone that was
+   holding 61fps, so it is excluded by device rather than by performance. */
+export const FRAGILE_FX = WEAK;
 export const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 export const lerp = (a, b, t) => a + (b - a) * t;
 export const sstep = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };

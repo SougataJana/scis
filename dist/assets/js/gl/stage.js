@@ -127,14 +127,12 @@ export function createStage(canvas) {
     }
     updatePointScale(renderer, camera); composer.render();
 
-    // adaptive quality — desktop only. Dropping the pixel ratio mid-session
-    // reallocates the renderer's and composer's framebuffers, which costs a
-    // visible flash at the moment it fires. Phones already start at a
-    // conservative ratio (see makeRenderer) so there is little left for this
-    // to reclaim there, and they are the devices most likely to trip the
-    // threshold and pay the flash. Desktops rarely reach it at all, so it is
-    // kept for them, where it was built to recover from heavy multi-tab or
-    // dual-GPU sessions.
+    // Adaptive quality, and now the safety net for every device. Scenes render
+    // at full detail everywhere (see LOW in common.js), so this is what catches
+    // a machine that cannot keep up: if the first 90 frames average worse than
+    // ~28fps it drops the pixel ratio once and eases the bloom. Reallocating
+    // the framebuffers costs one visible flash when it fires, which is worth
+    // paying on a device that is already dropping frames.
     if (!LOW) {
       acc += dt; frames++;
       if (frames === 90) {

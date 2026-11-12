@@ -1,6 +1,6 @@
 /* Scientific model builders. Each returns { group, update(t, dt) } in local units (≈1 = object radius). */
 import {
-  THREE, TAU, LOW, FRAGILE_FX, rng, gauss, lerp, clamp, sstep, GLSL_NOISE, makePoints, pointsMaterial, glowSprite, setSegment, hsl,
+  THREE, TAU, LOW, CELL_LOW, FRAGILE_FX, rng, gauss, lerp, clamp, sstep, GLSL_NOISE, makePoints, pointsMaterial, glowSprite, setSegment, hsl,
 } from './common.js';
 
 /* =========================================================================
@@ -49,7 +49,7 @@ export function makeCell() {
     vertexShader: memVS, fragmentShader: memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
     uniforms: { uTime, uBase: { value: base }, uA: { value: new THREE.Color(a) }, uB: { value: new THREE.Color(b) } },
   });
-  const memGeo = new THREE.IcosahedronGeometry(1, LOW ? 18 : 30);
+  const memGeo = new THREE.IcosahedronGeometry(1, CELL_LOW ? 18 : 30);
   parts.memOuter = new THREE.Mesh(memGeo, mkMem(THREE.FrontSide, .03, 0x0a3a48, 0x5fd0e0));
   parts.memInner = new THREE.Mesh(memGeo, mkMem(THREE.BackSide, .02, 0x062a34, 0x2a9fb4));
   parts.memOuter.renderOrder = 5;
@@ -73,7 +73,7 @@ export function makeCell() {
       float pores=smoothstep(.78,.84,snoise(vP*26.)*.5+.5)*.5; col-=pores*.25;       // nuclear pores
       gl_FragColor=vec4(col*.62, .96);
     }`;
-  parts.nucleus = new THREE.Mesh(new THREE.IcosahedronGeometry(.36, LOW ? 12 : 22), new THREE.ShaderMaterial({
+  parts.nucleus = new THREE.Mesh(new THREE.IcosahedronGeometry(.36, CELL_LOW ? 12 : 22), new THREE.ShaderMaterial({
     vertexShader: nucVS, fragmentShader: nucFS, transparent: true, uniforms: { uTime },
   }));
   group.add(parts.nucleus);
@@ -116,7 +116,7 @@ export function makeCell() {
   golgi.position.set(.42, -.22, .3); golgi.rotation.set(.4, .6, 0); group.add(golgi);
 
   // ribosomes / vesicles
-  const nR = LOW ? 260 : 520, rp = new Float32Array(nR * 3), rc = new Float32Array(nR * 3), rs = new Float32Array(nR), rbase = new Float32Array(nR * 3);
+  const nR = CELL_LOW ? 260 : 520, rp = new Float32Array(nR * 3), rc = new Float32Array(nR * 3), rs = new Float32Array(nR), rbase = new Float32Array(nR * 3);
   for (let i = 0; i < nR; i++) {
     const v = new THREE.Vector3(R() - .5, R() - .5, R() - .5).normalize().multiplyScalar(.45 + Math.cbrt(R()) * .46);
     rbase.set([v.x, v.y, v.z], i * 3); rp.set([v.x, v.y, v.z], i * 3);
