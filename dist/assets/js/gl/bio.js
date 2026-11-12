@@ -50,12 +50,39 @@ export function makeCell() {
      The membrane raises that sample to the 6th power, which amplifies the
      instability into a visible flicker; the nucleus only squares it, which is
      why it looks stable. Remove both switches once the fix is settled. */
-  const _memFS = /[?&]nospeckle=1\b/.test(location.search)
-    ? memFS.replace('float sp = snoise(vP*9. + uTime*.15)*.5+.5;', 'float sp = 0.0;')
-    : memFS;
+  /* Candidate fixes for the per-pixel cost of the speckle term. The device
+     reports full highp (fragHigh 23) and forcing highp changes nothing, but
+     dropping the snoise call clears the flicker, so the problem is how
+     expensive that call is per fragment, not its precision: full 3D simplex
+     noise over a near-fullscreen translucent sphere, twice (two shells).
+       ?vertspeckle=1  same noise, evaluated per vertex and interpolated
+                       (~21k vertices instead of ~670k fragments x2)
+       ?cheapnoise=1   per-pixel still, but a hash-based value noise costing
+                       a fraction of simplex
+     Both keep the rim sparkle; nospeckle removes it outright. */
+  const _q2 = new URLSearchParams(location.search);
+  const SPECKLE_SRC = 'float sp = snoise(vP*9. + uTime*.15)*.5+.5;';
+  const CHEAP_NOISE = `
+    float hash31(vec3 p){ p=fract(p*.1031); p+=dot(p,p.yzx+33.33); return fract((p.x+p.y)*p.z); }
+    float vnoise(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
+      return mix(mix(mix(hash31(i),hash31(i+vec3(1,0,0)),f.x),mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x),f.y),
+                 mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z); }`;
+  let _memFS = memFS, _memVS = memVS;
+  if (_q2.get('nospeckle') === '1') {
+    _memFS = memFS.replace(SPECKLE_SRC, 'float sp = 0.0;');
+  } else if (_q2.get('vertspeckle') === '1') {
+    _memVS = memVS.replace('varying vec3 vP;', 'varying vec3 vP; varying float vSp;')
+      .replace('p += normal*n; vP = p;', 'p += normal*n; vP = p; vSp = snoise(p*9. + uTime*.15)*.5+.5;');
+    _memFS = memFS.replace('varying vec3 vP;', 'varying vec3 vP; varying float vSp;')
+      .replace(SPECKLE_SRC, 'float sp = vSp;');
+  } else if (_q2.get('cheapnoise') === '1') {
+    // helpers must go ABOVE main(); GLSL has no nested function definitions
+    _memFS = memFS.replace('void main(){', CHEAP_NOISE + '\n    void main(){')
+      .replace(SPECKLE_SRC, 'float sp = vnoise(vP*9. + uTime*.15);');
+  }
   const _memHP = /[?&]memhp=1\b/.test(location.search);
   const mkMem = (side, base, a, b) => new THREE.ShaderMaterial({
-    vertexShader: memVS, fragmentShader: _memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
+    vertexShader: _memVS, fragmentShader: _memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
     ...(_memHP ? { precision: 'highp' } : {}),
     uniforms: { uTime, uBase: { value: base }, uA: { value: new THREE.Color(a) }, uB: { value: new THREE.Color(b) } },
   });
