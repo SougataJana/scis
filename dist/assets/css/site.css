@@ -48,6 +48,23 @@ main, footer, .nav { position: relative; z-index: 2; }
 .btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 40px -10px rgba(95, 227, 240, .5); }
 .btn:hover::after { opacity: 1; }
 .btn:active { transform: scale(.96); transition-duration: .1s; }
+
+/* Touch polish. A touch device does two things a mouse never does: it paints a
+   translucent highlight box over whatever is tapped, and a tap on a control can
+   begin selecting that control's label — so pressing a button looked like an
+   attempt to copy its text. Both are scoped to controls only, deliberately: body
+   copy, names, addresses and the mailto links stay selectable so they can still
+   be copied. */
+.btn, .cta, .menu-btn, .spk-chip, .brand, .nav .links a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none; user-select: none;
+}
+/* .btn already has a press state above; the controls that are not .btn need one
+   too, or removing the highlight leaves a tap with no feedback at all.
+   .session animates `transform` for its tilt, so it gets brightness instead of a
+   scale, which would otherwise overwrite that transform. */
+.menu-btn:active { transform: scale(.92); transition-duration: .1s; }
+.session:active { filter: brightness(1.07); }
 .btn.primary { background: linear-gradient(135deg, #5fe3f0, #3aa6d8 55%, #7d8cff); color: #02141a; font-weight: 600; box-shadow: 0 8px 36px -10px rgba(95, 227, 240, .7); }
 .btn.primary::before { opacity: 0; }
 .btn.primary::after { background: radial-gradient(160px circle at var(--mx) var(--my), rgba(255, 255, 255, .55), transparent 60%); }
