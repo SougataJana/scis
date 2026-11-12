@@ -47,7 +47,12 @@ export function updatePointScale(renderer, camera) {
 
 export function makeRenderer(canvas, { alpha = false, antialias = true } = {}) {
   const r = new THREE.WebGLRenderer({ canvas, antialias, alpha, powerPreference: 'high-performance' });
-  r.setPixelRatio(Math.min(devicePixelRatio || 1, LOW ? 1.25 : 1.75));
+  // Resolution is the dominant fragment cost: 1.75 against 1.25 is roughly
+  // double the pixels per frame, and measuring on a Moto G34 at native 1.75
+  // gave 31fps. Cap it on weak devices and phones, which recovers the frame
+  // rate while leaving geometry and particle counts at full detail - those are
+  // comparatively cheap, and they are most of what reads as richness.
+  r.setPixelRatio(Math.min(devicePixelRatio || 1, WEAK ? 1.25 : 1.75));
   r.toneMapping = THREE.ACESFilmicToneMapping;
   r.toneMappingExposure = .95;
   return r;

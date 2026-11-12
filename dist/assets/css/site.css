@@ -375,7 +375,12 @@ html { scroll-behavior: auto; }
 .nav { transition: opacity .9s ease, transform .9s var(--ease), background .4s, border-color .4s, backdrop-filter .4s; }
 html:not(.no-intro):not(.intro-done) .nav { opacity: 0; transform: translateY(-20px); pointer-events: none; }
 @media (max-width: 900px) {
-  .hero { background: linear-gradient(180deg, rgba(2,8,13,.45), rgba(2,8,13,.72) 55%, rgba(2,8,13,.5)); }
+  /* Readability scrims over the full-screen stage. These are per-section, so
+     wherever two of them meet their end and start alphas have to match exactly
+     or the join shows as a hard horizontal line across the page — .hero used to
+     fade out at .5 against .about's .55, which drew a visible edge just below
+     the countdown. Keep these endpoints in step when editing. */
+  .hero { background: linear-gradient(180deg, rgba(2,8,13,.45), rgba(2,8,13,.72) 55%, rgba(2,8,13,.55)); }
   .about { background: linear-gradient(rgba(2,8,13,.55), rgba(2,8,13,.7)); }
 }
 
@@ -470,3 +475,11 @@ h1, h2, .hero .lede, .hero .sub { text-shadow: 0 2px 28px rgba(2, 8, 13, .65); }
 }
 
 .glance { background: linear-gradient(rgba(2,8,13,0), rgba(2,8,13,.7) 140px, rgba(2,8,13,.7) calc(100% - 140px), rgba(2,8,13,0)); }
+/* On mobile .about carries a scrim ending at .7, and .glance fading up from
+   transparent against it left a second, larger step than the one below the
+   countdown. Start it already matched to .about and fade out only at its foot.
+   This has to sit after the rule above, not in the earlier mobile block, or
+   that later rule simply wins. */
+@media (max-width: 900px) {
+  .glance { background: linear-gradient(rgba(2,8,13,.7), rgba(2,8,13,.7) calc(100% - 140px), rgba(2,8,13,0)); }
+}
