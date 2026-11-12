@@ -50,7 +50,7 @@ export function start(canvas) {
   // with default attributes (antialias: true) instead of the one it asked for —
   // the instrument would silently change the settings it is meant to measure.
   // Once draws > 0 the context exists, so getContext returns that same one.
-  let gpu = '…', aa = '…', factsRead = false;
+  let gpu = '…', aa = '…', prec = '…', factsRead = false;
   function readFacts() {
     try {
       const gl = canvas && (canvas.getContext('webgl2') || canvas.getContext('webgl'));
@@ -58,6 +58,13 @@ export function start(canvas) {
       const dbg = gl.getExtension('WEBGL_debug_renderer_info');
       if (dbg) gpu = String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL));
       aa = String(gl.getContextAttributes().antialias);
+      // Fragment-shader float precision. The simplex noise in the membrane
+      // shader computes ((x*34)+1)*x with x up to 289 — about 2.84e6, which
+      // overflows mediump's 65504 ceiling and returns garbage. So a device
+      // reporting highp 0 here (or three falling back to mediump) is exactly
+      // the device where that noise, and the membrane, will flicker.
+      const hp = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
+      prec = 'fragHigh ' + (hp ? hp.precision : '?') + ' max~' + (hp ? Math.pow(2, hp.rangeMax).toExponential(1) : '?');
       factsRead = true;
     } catch (e) { /* diagnostic only — never break the page */ }
   }
@@ -111,6 +118,7 @@ export function start(canvas) {
         'janks>100ms ' + janks + '   CTX LOST ' + lost + ' / restored ' + restored + '\n' +
         'PIXELS lum ' + lumNow.toFixed(1) + '  SWING ' + lumSwing.toFixed(1) + ' /255\n' +
         'dpr ' + (devicePixelRatio || 1) + '  backing ' + backing + '  aa ' + aa + '\n' +
+        prec + '\n' +
         'gpu ' + gpu;
       worstWin = 0; lumMin = 999; lumMax = -1;
     }

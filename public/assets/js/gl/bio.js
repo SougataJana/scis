@@ -41,8 +41,22 @@ export function makeCell() {
       vec3 c = mix(uA, uB, rim) + vec3(.35,.55,.75)*pow(f,5.) + vec3(.9,.95,1.)*pow(sp,6.)*.18*rim;
       gl_FragColor = vec4(c*.8, clamp(uBase + rim*.42, 0., 1.));
     }`;
+  /* Temporary on-device tests for the membrane flicker:
+       ?memhp=1      force highp on this material
+       ?nospeckle=1  drop the pow(snoise(...),6.) term from the fragment shader
+     The noise's permute() computes ((x*34)+1)*x with x up to 289 (~2.84e6),
+     far past mediump's 65504 ceiling, so on a driver that gives fragment
+     shaders mediump it overflows and returns garbage that differs per frame.
+     The membrane raises that sample to the 6th power, which amplifies the
+     instability into a visible flicker; the nucleus only squares it, which is
+     why it looks stable. Remove both switches once the fix is settled. */
+  const _memFS = /[?&]nospeckle=1\b/.test(location.search)
+    ? memFS.replace('float sp = snoise(vP*9. + uTime*.15)*.5+.5;', 'float sp = 0.0;')
+    : memFS;
+  const _memHP = /[?&]memhp=1\b/.test(location.search);
   const mkMem = (side, base, a, b) => new THREE.ShaderMaterial({
-    vertexShader: memVS, fragmentShader: memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
+    vertexShader: memVS, fragmentShader: _memFS, transparent: true, depthWrite: false, side, blending: THREE.AdditiveBlending,
+    ...(_memHP ? { precision: 'highp' } : {}),
     uniforms: { uTime, uBase: { value: base }, uA: { value: new THREE.Color(a) }, uB: { value: new THREE.Color(b) } },
   });
   const memGeo = new THREE.IcosahedronGeometry(1, LOW ? 18 : 30);
