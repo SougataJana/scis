@@ -41,7 +41,7 @@
           <div>
             <h3><?= e($event['university']) ?></h3>
             <ul class="facts wide">
-              <li><b>Day 1 &amp; 2 — sessions</b><span><a class="inline-map-link" href="<?= e($event['saa_map_url']) ?>" target="_blank" rel="noopener">SAA Auditorium, JNU</a><br>Registration, talks, tea &amp; lunch</span></li>
+              <li><b>Day 1 &amp; 2 — sessions</b><span><a class="inline-map-link" href="<?= e($event['saa_map_url']) ?>" target="_blank" rel="noopener">Auditorium, JNU</a><br>Registration, talks, tea &amp; lunch</span></li>
               <li><b>Day 1 evening</b><span>SC&amp;IS<br>Poster session &amp; gala dinner</span></li>
             </ul>
             <a class="loc-pin" href="<?= e($event['map_url']) ?>" target="_blank" rel="noopener">

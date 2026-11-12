@@ -75,5 +75,5 @@ Vercel does not run PHP natively, so deploy the pre-rendered site: run `php buil
 ## Update 3 (10 Nov)
 - The JNU logo and the three government marks now sit in their own flat strip at the very top of the page (`#idbar`), above the floating links/Register pill — not inside it.
 - Footer mark is now Atmanirbhar Bharat + Developed India Mission only (Viksit Bharat removed from the footer; all three remain at the top).
-- Venue: Poster session and Gala dinner are at **SC&IS**; every other item (registration, all seven sessions, tea, lunch, valedictory) is at **SAA Auditorium, JNU** (`src/Programme.php`, `views/glance.php`).
+- Venue: Poster session and Gala dinner are at **SC&IS**; every other item (registration, all seven sessions, tea, lunch, valedictory) is at **Auditorium, JNU** (exact hall to be confirmed) (`src/Programme.php`, `views/glance.php`).
 - Checked at seven widths from 360px to 1920px: no horizontal overflow, no console errors, header never overlaps hero text.

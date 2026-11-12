@@ -61,8 +61,8 @@ final readonly class Session
 
 final class Programme
 {
-    private const string D1_VENUE = 'SAA Auditorium, JNU';
-    private const string D2_VENUE = 'SAA Auditorium, JNU';
+    private const string D1_VENUE = 'Auditorium, JNU';
+    private const string D2_VENUE = 'Auditorium, JNU';
 
     private static function talk(string $time, string $who, string $aff, bool $short = false): Talk
     {
@@ -147,7 +147,7 @@ final class Programme
         return [
             [
                 'key' => 'day1', 'label' => 'Day 1', 'short' => '27 Nov', 'date' => 'Friday, 27 November 2026',
-                'venue' => 'SAA Auditorium, JNU',
+                'venue' => 'Auditorium, JNU',
                 'items' => [
                     $ev('09:00 – 09:50', 'Registration, welcome & inaugural remarks', 'welcome', self::D1_VENUE),
                     $se('s1'),
@@ -163,7 +163,7 @@ final class Programme
             ],
             [
                 'key' => 'day2', 'label' => 'Day 2', 'short' => '28 Nov', 'date' => 'Saturday, 28 November 2026',
-                'venue' => 'SAA Auditorium, JNU',
+                'venue' => 'Auditorium, JNU',
                 'items' => [
                     $se('s5'),
                     $ev('11:15 – 11:30', 'Tea & informal conversations', 'tea'),
