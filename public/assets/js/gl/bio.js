@@ -23,21 +23,26 @@ export function makeCell() {
       vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz);
       gl_Position = projectionMatrix*mv;
     }`;
-  // The receptor-speckle highlight that used to live here was removed: it made
-  // the cell flicker hard on some Android GPUs (confirmed on an Adreno 619,
-  // where whole frames came out black at roughly 30Hz while the frame rate
-  // still read a healthy 61fps). It was the brightest, highest-frequency thing
-  // in the scene, and bloom amplified it -- removing either the speckle or the
-  // bloom cured it, while changing how the noise was computed (per-vertex,
-  // cheaper noise, broader falloff, forced highp) did not, so the trigger was
-  // the bright contribution itself rather than its cost or precision. The rim
-  // fresnel below carries the membrane's look on its own.
-  const memFS = /* glsl */`
-    uniform vec3 uA; uniform vec3 uB; uniform float uBase; varying vec3 vN; varying vec3 vV;
+  // Receptor speckle: a sparkle on the membrane rim, tiered by device class.
+  // On capable hardware it stays. On LOW it is dropped, because it made the
+  // cell flicker badly on some mobile GPUs (confirmed on an Adreno 619, where
+  // whole frames came out black at roughly 30Hz while the frame rate still
+  // read a healthy 61fps). It is the brightest, highest-frequency thing in the
+  // scene and bloom amplifies it; removing either the speckle or the bloom
+  // cured it, while per-vertex evaluation, a cheaper noise, a broader falloff
+  // and forced highp all still flickered - so the trigger is the bright
+  // contribution itself, not its cost or precision. Note LOW keys off viewport
+  // and core count, which are a proxy for the GPU rather than a measure of it;
+  // a wide-screen machine with a weak or unusual GPU could still be affected.
+  // Dropping the term also lets the fragment shader skip the noise library.
+  const SPECKLE = !LOW;
+  const memFS = /* glsl */`${SPECKLE ? GLSL_NOISE : ''}
+    uniform vec3 uA; uniform vec3 uB; uniform float uBase;${SPECKLE ? ' uniform float uTime;' : ''} varying vec3 vN; varying vec3 vV;${SPECKLE ? ' varying vec3 vP;' : ''}
     void main(){
       float f = 1.0 - abs(dot(normalize(vN), normalize(vV)));
       float rim = pow(f, 2.0);
-      vec3 c = mix(uA, uB, rim) + vec3(.35,.55,.75)*pow(f,5.);
+      ${SPECKLE ? 'float sp = snoise(vP*9. + uTime*.15)*.5+.5;' : ''}
+      vec3 c = mix(uA, uB, rim) + vec3(.35,.55,.75)*pow(f,5.)${SPECKLE ? ' + vec3(.9,.95,1.)*pow(sp,6.)*.18*rim' : ''};
       gl_FragColor = vec4(c*.8, clamp(uBase + rim*.42, 0., 1.));
     }`;
   const mkMem = (side, base, a, b) => new THREE.ShaderMaterial({
