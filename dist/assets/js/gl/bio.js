@@ -13,6 +13,7 @@ import {
      mem  membrane shells + haze      nuc  nucleus, nucleolus, chromatin
      org  ER, mitochondria, Golgi     pts  ribosome points + vesicles
    Inert unless passed. Remove once the culprit is known. */
+const _twrap = /[?&]twrap=1\b/.test(location.search);
 const _hide = new Set((new URLSearchParams(location.search).get('cellhide') || '').split(',').filter(Boolean));
 
 export function makeCell() {
@@ -47,10 +48,12 @@ export function makeCell() {
   const memGeo = new THREE.IcosahedronGeometry(1, LOW ? 18 : 30);
   parts.memOuter = new THREE.Mesh(memGeo, mkMem(THREE.FrontSide, .03, 0x0a3a48, 0x5fd0e0));
   parts.memInner = new THREE.Mesh(memGeo, mkMem(THREE.BackSide, .02, 0x062a34, 0x2a9fb4));
-  parts.memOuter.renderOrder = 5; if (show('mem')) group.add(parts.memInner, parts.memOuter);
+  parts.memOuter.renderOrder = 5;
+  if (show('mem') && show('shell') && show('shellin')) group.add(parts.memInner);
+  if (show('mem') && show('shell') && show('shellout')) group.add(parts.memOuter);
 
   // cytoplasm haze
-  const haze = glowSprite(0x2fb4c8, 3.2, .05); if (show('mem')) group.add(haze);
+  const haze = glowSprite(0x2fb4c8, 3.2, .05); if (show('mem') && show('haze')) group.add(haze);
 
   // nucleus
   const nucVS = /* glsl */`${GLSL_NOISE}
@@ -123,7 +126,7 @@ export function makeCell() {
 
   const tmp = new THREE.Vector3();
   function update(t, dt) {
-    uTime.value = t;
+    uTime.value = _twrap ? t % 60 : t;
     parts.nucleus.rotation.y = t * .04; chrom.rotation.set(t * .03, t * .05, 0); er.rotation.y = t * .02; er.rotation.x = t * .015;
     mito.forEach((m) => {
       const u = m.userData; u.a += u.sp * dt;
