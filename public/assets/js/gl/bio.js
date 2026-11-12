@@ -61,6 +61,12 @@ export function makeCell() {
                        a fraction of simplex
      Both keep the rim sparkle; nospeckle removes it outright. */
   const _q2 = new URLSearchParams(location.search);
+  // ?specklemul=<n> scales the speckle's brightness (default 1). Any non-zero
+  // speckle flickers and zero is clean, while how the noise is computed makes
+  // no difference - so what matters is how bright this term gets, not its cost.
+  // Dimming it tests whether the trigger is bright pixels crossing the bloom
+  // threshold rather than the speckle as such.
+  const _spMul = parseFloat(_q2.get('specklemul'));
   const SPECKLE_SRC = 'float sp = snoise(vP*9. + uTime*.15)*.5+.5;';
   const CHEAP_NOISE = `
     float hash31(vec3 p){ p=fract(p*.1031); p+=dot(p,p.yzx+33.33); return fract((p.x+p.y)*p.z); }
@@ -68,6 +74,7 @@ export function makeCell() {
       return mix(mix(mix(hash31(i),hash31(i+vec3(1,0,0)),f.x),mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x),f.y),
                  mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z); }`;
   let _memFS = memFS, _memVS = memVS;
+  if (Number.isFinite(_spMul)) _memFS = _memFS.replace('pow(sp,6.)*.18*rim', 'pow(sp,6.)*' + (0.18 * _spMul).toFixed(4) + '*rim');
   if (_q2.get('nospeckle') === '1') {
     _memFS = memFS.replace(SPECKLE_SRC, 'float sp = 0.0;');
   } else if (_q2.get('vertspeckle') === '1') {
