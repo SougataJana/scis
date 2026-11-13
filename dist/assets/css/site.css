@@ -284,6 +284,12 @@ h2[data-split] .w > span { filter: none; }
 .abs-authors { color: var(--mute); font-size: .95rem; margin: -8px 0 16px; }
 .abs-body { color: #cfe7ec; line-height: 1.7; max-width: 60ch; }
 .abs-body p + p { margin-top: 1em; }
+.abs-body i, .abs-refs i { font-style: italic; }
+.abs-body sup, .abs-body sub, .abs-authors sup, .abs-refs sup { font-size: .72em; line-height: 0; }
+.abs-refs { max-width: 60ch; margin-top: 26px; padding-top: 16px; border-top: 1px solid rgba(140, 230, 245, .14); color: var(--mute); font-size: .88rem; line-height: 1.55; }
+.abs-refs h5 { font: 600 12px 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+.abs-refs ol { padding-left: 1.3em; }
+.abs-refs li + li { margin-top: 6px; }
 .abs-body .abs-pending { color: var(--mute); font-style: italic; }
 
 @media (prefers-reduced-motion: reduce) {

@@ -112,6 +112,7 @@ require $root . '/views/register.php';
       <h4 class="abs-title" id="absTitle"></h4>
       <p class="abs-authors" id="absAuthors" hidden></p>
       <div class="abs-body" id="absBody"></div>
+      <div class="abs-refs" id="absRefs" hidden></div>
     </div>
   </div>
 </div>

@@ -227,7 +227,10 @@ function closeSheet() {
 }
 
 /* ---- click a speaker inside a session → their abstract, layered on top of the open sheet ---- */
-function fillAbstract(name, aff, meta, title, abstract, hue, initials, authors) {
+/* Abstract text arrives escaped; only the speaker's own <i>, <sup>, <sub> (species names, subscripts,
+   citation numbers) are turned back into markup. */
+const rich = (t) => esc(t).replace(/&lt;(\/?)(i|sup|sub)&gt;/g, '<$1$2>');
+function fillAbstract(name, aff, meta, title, abstract, hue, initials, authors, refs) {
   sheet.style.setProperty('--h', hue);
   $('#absInitials').textContent = initials;
   $('#absName').textContent = name;
@@ -235,17 +238,20 @@ function fillAbstract(name, aff, meta, title, abstract, hue, initials, authors) 
   $('#absTime').textContent = meta || '';
   $('#absTitle').textContent = title || 'Abstract to follow';
   $('#absTitle').classList.toggle('long', (title || '').length > 80);
-  const au = $('#absAuthors'); au.textContent = authors || ''; au.hidden = !authors;
+  const au = $('#absAuthors'); au.innerHTML = authors ? rich(authors).replace(/\n/g, '<br>') : ''; au.hidden = !authors;
   $('#absBody').scrollTop = 0;
   $('#absBody').innerHTML = abstract
-    ? abstract.split(/\n{2,}/).map(p => `<p>${esc(p)}</p>`).join('')
+    ? abstract.split(/\n{2,}/).map(p => `<p>${rich(p)}</p>`).join('')
     : `<p class="abs-pending">Full abstract to follow — check back closer to the symposium.</p>`;
+  const rf = $('#absRefs');
+  rf.hidden = !(refs && refs.length);
+  rf.innerHTML = refs && refs.length ? `<h5>References</h5><ol>${refs.map(r => `<li>${rich(r)}</li>`).join('')}</ol>` : '';
 }
 async function openAbstract(id, idx, x, y) {
   const s = byId[id]; if (!s) return;
   const t = s.talks[idx]; if (!t) return;
   if (!sheetOpen || sheet.dataset.sid !== id) await openSheet(id, x, y);
-  fillAbstract(t.speaker, t.affiliation, `${t.time} · ${t.keynote ? 'Keynote' : 'Short talk'}`, t.title, t.abstract, s.hue, t.initials, t.authors);
+  fillAbstract(t.speaker, t.affiliation, `${t.time} · ${t.keynote ? 'Keynote' : 'Short talk'}`, t.title, t.abstract, s.hue, t.initials, t.authors, t.references);
   sheet.classList.add('view-abstract');
   $('#sheetAbstract').hidden = false;
 }

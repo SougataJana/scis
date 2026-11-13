@@ -14,6 +14,7 @@ final readonly class Talk
         public ?string $title = null,     // the talk's own title, once speakers confirm it
         public ?string $abstract = null,  // full abstract text, once submitted
         public ?string $authors = null,   // co-author line, only when the abstract was sent with one
+        public ?array $references = null, // reference list, when the abstract cites one
     ) {}
 
     public function initials(): string
@@ -30,7 +31,7 @@ final readonly class Talk
         return [
             'time' => $this->time, 'speaker' => $this->speaker, 'affiliation' => $this->affiliation,
             'slot' => $this->slot, 'keynote' => $this->keynote, 'initials' => $this->initials(),
-            'title' => $this->title, 'abstract' => $this->abstract, 'authors' => $this->authors,
+            'title' => $this->title, 'abstract' => $this->abstract, 'authors' => $this->authors, 'references' => $this->references,
         ];
     }
 }
@@ -68,7 +69,7 @@ final class Programme
     private static function talk(string $time, string $who, string $aff, bool $short = false): Talk
     {
         $a = Abstracts::for($who);   // src/Abstracts.php — filled in as speakers send theirs
-        return new Talk($time, $who, $aff, $short ? '12 + 3 min' : '25 + 5 min', !$short, $a['title'] ?? null, $a['abstract'] ?? null, $a['authors'] ?? null);
+        return new Talk($time, $who, $aff, $short ? '12 + 3 min' : '25 + 5 min', !$short, $a['title'] ?? null, $a['abstract'] ?? null, $a['authors'] ?? null, $a['references'] ?? null);
     }
 
     /** @return list<Session> */
