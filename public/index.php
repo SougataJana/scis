@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/../src/compat.php';
+require __DIR__ . '/../src/Abstracts.php';
 require __DIR__ . '/../src/Programme.php';
 
 use Scis\Programme;
@@ -109,6 +110,7 @@ require $root . '/views/register.php';
       </div>
       <p class="abs-time" id="absTime"></p>
       <h4 class="abs-title" id="absTitle"></h4>
+      <p class="abs-authors" id="absAuthors" hidden></p>
       <div class="abs-body" id="absBody"></div>
     </div>
   </div>

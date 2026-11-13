@@ -280,7 +280,10 @@ h2[data-split] .w > span { filter: none; }
 .abs-speaker small { color: var(--mute); }
 .abs-time { font: 500 13px 'JetBrains Mono', monospace; letter-spacing: .06em; color: var(--amber); margin-bottom: 14px; }
 .abs-title { font: 700 clamp(1.4rem, 2.6vw, 2rem)/1.15 var(--display); letter-spacing: -.02em; max-width: 26ch; margin-bottom: 18px; }
+.abs-title.long { font-size: clamp(1.15rem, 2vw, 1.5rem); max-width: 40ch; line-height: 1.25; }
+.abs-authors { color: var(--mute); font-size: .95rem; margin: -8px 0 16px; }
 .abs-body { color: #cfe7ec; line-height: 1.7; max-width: 60ch; }
+.abs-body p + p { margin-top: 1em; }
 .abs-body .abs-pending { color: var(--mute); font-style: italic; }
 
 @media (prefers-reduced-motion: reduce) {

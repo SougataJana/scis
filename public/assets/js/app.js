@@ -227,22 +227,25 @@ function closeSheet() {
 }
 
 /* ---- click a speaker inside a session → their abstract, layered on top of the open sheet ---- */
-function fillAbstract(name, aff, meta, title, abstract, hue, initials) {
+function fillAbstract(name, aff, meta, title, abstract, hue, initials, authors) {
   sheet.style.setProperty('--h', hue);
   $('#absInitials').textContent = initials;
   $('#absName').textContent = name;
   $('#absAff').textContent = aff;
   $('#absTime').textContent = meta || '';
   $('#absTitle').textContent = title || 'Abstract to follow';
+  $('#absTitle').classList.toggle('long', (title || '').length > 80);
+  const au = $('#absAuthors'); au.textContent = authors || ''; au.hidden = !authors;
+  $('#absBody').scrollTop = 0;
   $('#absBody').innerHTML = abstract
-    ? `<p>${esc(abstract)}</p>`
+    ? abstract.split(/\n{2,}/).map(p => `<p>${esc(p)}</p>`).join('')
     : `<p class="abs-pending">Full abstract to follow — check back closer to the symposium.</p>`;
 }
 async function openAbstract(id, idx, x, y) {
   const s = byId[id]; if (!s) return;
   const t = s.talks[idx]; if (!t) return;
   if (!sheetOpen || sheet.dataset.sid !== id) await openSheet(id, x, y);
-  fillAbstract(t.speaker, t.affiliation, `${t.time} · ${t.keynote ? 'Keynote' : 'Short talk'}`, t.title, t.abstract, s.hue, t.initials);
+  fillAbstract(t.speaker, t.affiliation, `${t.time} · ${t.keynote ? 'Keynote' : 'Short talk'}`, t.title, t.abstract, s.hue, t.initials, t.authors);
   sheet.classList.add('view-abstract');
   $('#sheetAbstract').hidden = false;
 }

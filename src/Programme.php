@@ -13,6 +13,7 @@ final readonly class Talk
         public bool $keynote,      // 25+5 slots = keynote speakers on the poster
         public ?string $title = null,     // the talk's own title, once speakers confirm it
         public ?string $abstract = null,  // full abstract text, once submitted
+        public ?string $authors = null,   // co-author line, only when the abstract was sent with one
     ) {}
 
     public function initials(): string
@@ -29,7 +30,7 @@ final readonly class Talk
         return [
             'time' => $this->time, 'speaker' => $this->speaker, 'affiliation' => $this->affiliation,
             'slot' => $this->slot, 'keynote' => $this->keynote, 'initials' => $this->initials(),
-            'title' => $this->title, 'abstract' => $this->abstract,
+            'title' => $this->title, 'abstract' => $this->abstract, 'authors' => $this->authors,
         ];
     }
 }
@@ -66,7 +67,8 @@ final class Programme
 
     private static function talk(string $time, string $who, string $aff, bool $short = false): Talk
     {
-        return new Talk($time, $who, $aff, $short ? '12 + 3 min' : '25 + 5 min', !$short);
+        $a = Abstracts::for($who);   // src/Abstracts.php — filled in as speakers send theirs
+        return new Talk($time, $who, $aff, $short ? '12 + 3 min' : '25 + 5 min', !$short, $a['title'] ?? null, $a['abstract'] ?? null, $a['authors'] ?? null);
     }
 
     /** @return list<Session> */
@@ -98,7 +100,7 @@ final class Programme
                 self::talk('15:20 – 15:35', 'Dr. Kuldeep Singh Yadav', 'MANIT Bhopal', true),
                 self::talk('15:35 – 15:50', 'Dr. Rahul Gupta', 'University of Bristol', true),
             ]),
-            new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar Ahmad, Dr. Rakesh & Dr. Jyoti Singh Kirar', self::D1_VENUE, 198,
+            new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar Ahmad, Dr. Rakesh Pandey & Dr. Jyoti Singh Kirar', self::D1_VENUE, 198,
                 'Learning from biological data — models that predict, design and explain.', [
                 self::talk('16:20 – 16:50', 'Dr. Vivek Tiwari', 'IISER Berhampur'),
                 self::talk('16:50 – 17:20', 'Dr. Tavpritesh Sethi', 'IIIT Delhi'),
