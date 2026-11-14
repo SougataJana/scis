@@ -144,6 +144,12 @@ Finally, we leverage these vascular, structural, functional, metabolic and cogni
                 'Gupta NK. et al. In Communication.',
             ],
         ],
+        'Dr. Nagaraj Balasubramanian' => [
+            'title' => 'Matrix-mechanosensing-regulated Golgi organisation and function.',
+            'authors' => null,
+            'abstract' => 'Integrin-mediated adhesion regulates membrane trafficking to control anchorage-dependent signalling and growth, which are deregulated in anchorage-independent cancers. The Golgi apparatus is a vital regulator of cellular function that contributes to everything from cell migration to development. Loss of adhesion triggers rapid, reversible disorganisation of the Golgi. This is mediated by differential activation of Arf1, regulated by the Arf GEF GBF1. This leads to differential recruitment of microtubule motor proteins that regulate the Golgi. This regulatory pathway controls Golgi-dependent microtubule stability and cell surface glycosylation. We construct mathematical models to quantitatively connect Golgi organisational changes to cell-surface glycan dynamics, measured by lectin binding. These models help us design decoders to infer Golgi state in single cells. My talk will discuss this pathway in cells and how it can help us better understand the Golgi apparatus and its implications for cancers and their differential mechanosensing.',
+            'references' => null,
+        ],
     ];
 
     /** @return array{title:string, authors:?string, abstract:string, references:?list<string>}|null */
