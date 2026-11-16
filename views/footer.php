@@ -5,6 +5,7 @@
         <h4><?= e($event['school']) ?></h4>
         <p><?= e($event['university']) ?><br>Founded as the School of Information Technology (SIT)</p>
         <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU.</p>
+        <a class="sponsor-logo" href="https://www.rsc.org" target="_blank" rel="noopener" aria-label="Royal Society of Chemistry"><img src="assets/img/rsc-logo.svg" width="250" height="70" alt="Royal Society of Chemistry" loading="lazy" decoding="async"></a>
       </div>
       <div>
         <h4>Organising secretaries</h4>

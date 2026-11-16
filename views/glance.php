@@ -19,6 +19,7 @@
             <h3><?= e($event['theme']) ?></h3>
             <p>A two-day scientific celebration of 25 years of the School of Computational and Integrative Sciences — invited lectures, student talks, poster sessions, alumni interaction and informal discussion, designed to foster exchange, mentorship and new collaborations.</p>
             <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU.</p>
+            <a class="sponsor-logo" href="https://www.rsc.org" target="_blank" rel="noopener" aria-label="Royal Society of Chemistry"><img src="assets/img/rsc-logo.svg" width="250" height="70" alt="Royal Society of Chemistry" loading="lazy" decoding="async"></a>
           </div>
         </div>
 
@@ -41,8 +42,9 @@
           <div>
             <h3><?= e($event['university']) ?></h3>
             <ul class="facts wide">
-              <li><b>Day 1 &amp; 2 — sessions</b><span><a class="inline-map-link" href="<?= e($event['saa_map_url']) ?>" target="_blank" rel="noopener">Auditorium, JNU</a><br>Registration, talks, tea &amp; lunch</span></li>
-              <li><b>Day 1 evening</b><span>SC&amp;IS<br>Poster session &amp; gala dinner</span></li>
+              <li><b>Day 1 — sessions</b><span><a class="inline-map-link" href="<?= e($event['day1_map_url']) ?>" target="_blank" rel="noopener">Lecture Hall 2, Convention Center</a><br>Registration, talks &amp; tea</span></li>
+              <li><b>Day 2 — sessions</b><span><a class="inline-map-link" href="<?= e($event['day2_map_url']) ?>" target="_blank" rel="noopener">School of Life Sciences Auditorium</a><br>Talks, tea &amp; valedictory</span></li>
+              <li><b>Lunch &amp; dinner</b><span>SC&amp;IS<br>Lunch on both days · Day 1 evening: poster session &amp; gala dinner</span></li>
             </ul>
             <a class="loc-pin" href="<?= e($event['map_url']) ?>" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>

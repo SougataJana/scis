@@ -236,8 +236,8 @@ function fillAbstract(name, aff, meta, title, abstract, hue, initials, authors, 
   $('#absName').textContent = name;
   $('#absAff').textContent = aff;
   $('#absTime').textContent = meta || '';
-  $('#absTitle').textContent = title || 'Abstract to follow';
-  $('#absTitle').classList.toggle('long', (title || '').length > 80);
+  $('#absTitle').innerHTML = title ? rich(title) : 'Abstract to follow';
+  $('#absTitle').classList.toggle('long', (title || '').replace(/<[^>]+>/g, '').length > 80);
   const au = $('#absAuthors'); au.innerHTML = authors ? rich(authors).replace(/\n/g, '<br>') : ''; au.hidden = !authors;
   $('#absBody').scrollTop = 0;
   $('#absBody').innerHTML = abstract

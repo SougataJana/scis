@@ -492,3 +492,8 @@ h1, h2, .hero .lede, .hero .sub { text-shadow: 0 2px 28px rgba(2, 8, 13, .65); }
 @media (max-width: 900px) {
   .glance { background: linear-gradient(rgba(2,8,13,.7), rgba(2,8,13,.7) calc(100% - 140px), rgba(2,8,13,0)); }
 }
+
+/* RSC logo: primary (navy) artwork, unaltered, on a white panel so it never sits on a palette colour or busy background.
+   Padding >= half the C-marque height (~17px at this size) keeps the required clear space. */
+.sponsor-logo { display: block; width: 200px; max-width: 70%; margin-top: 16px; padding: 18px 20px; background: #fff; border-radius: 10px; }
+.sponsor-logo img { display: block; width: 100%; height: auto; }

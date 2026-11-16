@@ -63,8 +63,9 @@ final readonly class Session
 
 final class Programme
 {
-    private const string D1_VENUE = 'Auditorium, JNU';
-    private const string D2_VENUE = 'Auditorium, JNU';
+    private const string D1_VENUE = 'Lecture Hall 2, Convention Center';
+    private const string D2_VENUE = 'School of Life Sciences Auditorium';
+    private const string MEALS_VENUE = 'SC&IS';   // lunch on both days, poster session and gala dinner
 
     private static function talk(string $time, string $who, string $aff, bool $short = false): Talk
     {
@@ -81,11 +82,12 @@ final class Programme
         }
 
         return $cache = [
-            new Session('s1', 1, 'Omics Science', '09:50 – 11:20', 'Dr. A. Krishnamachari & Dr. Pallavi Somvanshi', self::D1_VENUE, 175,
+            new Session('s1', 1, 'Omics Science', '09:40 – 11:25', 'Dr. A. Krishnamachari & Dr. Pallavi Somvanshi', self::D1_VENUE, 175,
                 'Reading life at genome scale — single-cell, CRISPR and regulatory omics.', [
-                self::talk('09:50 – 10:20', 'Dr. Nagaraj Balasubramanian', 'IISER Pune'),
-                self::talk('10:20 – 10:50', 'Dr. Debojyoti Chakraborty', 'CSIR-IGIB'),
-                self::talk('10:50 – 11:20', 'Dr. Sumeet Pal Singh', 'SNU'),
+                self::talk('09:40 – 10:10', 'Dr. Nagaraj Balasubramanian', 'IISER Pune'),
+                self::talk('10:10 – 10:40', 'Dr. Debojyoti Chakraborty', 'CSIR-IGIB'),
+                self::talk('10:40 – 11:10', 'Dr. Sumeet Pal Singh', 'SNU'),
+                self::talk('11:10 – 11:25', 'Dr. Rahul Gupta', 'University of Bristol', true),
             ]),
             new Session('s2', 2, 'Structural Biology and Drug Discovery', '11:50 – 13:20', 'Dr. Ragothaman Yennamalli & Dr. Andrew M. Lynn', self::D1_VENUE, 22,
                 'From atomic structure to molecules that bind, block and heal.', [
@@ -99,7 +101,7 @@ final class Programme
                 self::talk('14:20 – 14:50', 'Dr. Rashmi Bhardwaj', 'GGSIPU'),
                 self::talk('14:50 – 15:20', 'Dr. Manish Dev Shrimali', 'Central University of Rajasthan'),
                 self::talk('15:20 – 15:35', 'Dr. Kuldeep Singh Yadav', 'MANIT Bhopal', true),
-                self::talk('15:35 – 15:50', 'Dr. Rahul Gupta', 'University of Bristol', true),
+                self::talk('15:35 – 15:50', 'Dr. Saurabh Sharma', 'SCSS, JNU', true),
             ]),
             new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar Ahmad, Dr. Rakesh Pandey & Dr. Jyoti Singh Kirar', self::D1_VENUE, 198,
                 'Learning from biological data — models that predict, design and explain.', [
@@ -125,8 +127,8 @@ final class Programme
             new Session('s7', 7, 'Molecular Biophysics and Biophysical Chemistry', '14:15 – 16:00', 'Dr. Arnab Bhattacharjee', self::D2_VENUE, 48,
                 'Forces, folding and dynamics of the molecules that do the work.', [
                 self::talk('14:15 – 14:45', 'Dr. Suman Dhar', 'TERI, New Delhi'),
-                self::talk('14:45 – 15:15', 'Dr. Shruthi Viswanath', 'NCBS'),
-                self::talk('15:15 – 15:45', 'Dr. Ruchi Anand', 'IIT Bombay'),
+                self::talk('14:45 – 15:15', 'Dr. Ruchi Anand', 'IIT Bombay'),
+                self::talk('15:15 – 15:45', 'Dr. Shruthi Viswanath', 'NCBS'),
                 self::talk('15:45 – 16:00', 'Dr. Anupam Mondal', 'IIT Kharagpur', true),
             ]),
         ];
@@ -150,28 +152,28 @@ final class Programme
         return [
             [
                 'key' => 'day1', 'label' => 'Day 1', 'short' => '27 Nov', 'date' => 'Friday, 27 November 2026',
-                'venue' => 'Auditorium, JNU',
+                'venue' => self::D1_VENUE,
                 'items' => [
-                    $ev('09:00 – 09:50', 'Registration, welcome & inaugural remarks', 'welcome', self::D1_VENUE),
+                    $ev('09:00 – 09:40', 'Registration, welcome & inaugural remarks', 'welcome', self::D1_VENUE),
                     $se('s1'),
-                    $ev('11:20 – 11:50', 'Tea / Coffee break', 'tea'),
+                    $ev('11:25 – 11:50', 'Tea / Coffee break', 'tea'),
                     $se('s2'),
-                    $ev('13:20 – 14:20', 'Lunch', 'lunch', self::D1_VENUE),
+                    $ev('13:20 – 14:20', 'Lunch', 'lunch', self::MEALS_VENUE),
                     $se('s3'),
                     $ev('15:50 – 16:20', 'Tea / Coffee break', 'tea'),
                     $se('s4'),
-                    $ev('18:05 – 19:30', 'Poster & networking session', 'poster', 'SC&IS'),
-                    $ev('19:30 onwards', 'Gala dinner', 'dinner', 'SC&IS', 'Informal reflections on the SC&IS journey'),
+                    $ev('18:05 – 19:30', 'Poster & networking session', 'poster', self::MEALS_VENUE),
+                    $ev('19:30 onwards', 'Gala dinner', 'dinner', self::MEALS_VENUE, 'Informal reflections on the SC&IS journey'),
                 ],
             ],
             [
                 'key' => 'day2', 'label' => 'Day 2', 'short' => '28 Nov', 'date' => 'Saturday, 28 November 2026',
-                'venue' => 'Auditorium, JNU',
+                'venue' => self::D2_VENUE,
                 'items' => [
                     $se('s5'),
-                    $ev('11:15 – 11:30', 'Tea & informal conversations', 'tea'),
+                    $ev('11:15 – 11:30', 'Tea & informal conversations', 'tea', self::D2_VENUE),
                     $se('s6'),
-                    $ev('13:15 – 14:15', 'Lunch & conversations', 'lunch', self::D2_VENUE),
+                    $ev('13:15 – 14:15', 'Lunch & conversations', 'lunch', self::MEALS_VENUE),
                     $se('s7'),
                     $ev('16:00 – 16:30', 'Valedictory session & poster awards', 'close', self::D2_VENUE),
                 ],
