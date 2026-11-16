@@ -12,7 +12,7 @@
       <div class="dl glass" data-deadline="abstract">
         <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="trk"/><circle cx="50" cy="50" r="44" class="bar"/></svg>
         <b data-days>–</b><small>days left</small>
-        <span>Abstract deadline<br><strong>15 Nov 2026</strong></span>
+        <span>Abstract deadline<br><strong>18 Nov 2026</strong></span>
       </div>
       <div class="dl glass" data-deadline="registration">
         <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="trk"/><circle cx="50" cy="50" r="44" class="bar"/></svg>

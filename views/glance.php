@@ -18,8 +18,12 @@
           <div>
             <h3><?= e($event['theme']) ?></h3>
             <p>A two-day scientific celebration of 25 years of the School of Computational and Integrative Sciences — invited lectures, student talks, poster sessions, alumni interaction and informal discussion, designed to foster exchange, mentorship and new collaborations.</p>
-            <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU.</p>
-            <a class="sponsor-logo" href="https://www.rsc.org" target="_blank" rel="noopener" aria-label="Royal Society of Chemistry"><img src="assets/img/rsc-logo.svg" width="250" height="70" alt="Royal Society of Chemistry" loading="lazy" decoding="async"></a>
+            <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU and the Royal Society of Chemistry.</p>
+            <div class="sponsor-logos">
+              <a href="https://dbtindia.gov.in" target="_blank" rel="noopener" aria-label="Department of Biotechnology, Government of India (DBT-Bioinformatics Center)"><img src="assets/img/dbt-logo.png" width="292" height="200" alt="Department of Biotechnology, Government of India" loading="lazy" decoding="async"></a>
+              <a href="https://www.jnu.ac.in" target="_blank" rel="noopener" aria-label="School of Computational and Integrative Sciences, JNU"><img src="assets/img/jnu-logo.png" width="447" height="447" alt="SC&amp;IS, Jawaharlal Nehru University" loading="lazy" decoding="async"></a>
+              <a href="https://www.rsc.org" target="_blank" rel="noopener" aria-label="Royal Society of Chemistry"><img src="assets/img/rsc-logo.svg" width="250" height="70" alt="Royal Society of Chemistry" loading="lazy" decoding="async"></a>
+            </div>
           </div>
         </div>
 
@@ -29,7 +33,7 @@
             <h3>Fri 27 &amp; Sat 28 November 2026</h3>
             <p>Day 1 opens at 09:00 with registration and inaugural remarks and closes with posters and a gala dinner. Day 2 runs 09:30 – 16:30 and ends with the valedictory session and poster awards.</p>
             <ul class="facts">
-              <li><b>15 Nov</b><span>Abstract submission deadline</span></li>
+              <li><b>18 Nov</b><span>Abstract submission deadline</span></li>
               <li><b>20 Nov</b><span>Registration deadline</span></li>
             </ul>
           </div>

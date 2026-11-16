@@ -493,7 +493,9 @@ h1, h2, .hero .lede, .hero .sub { text-shadow: 0 2px 28px rgba(2, 8, 13, .65); }
   .glance { background: linear-gradient(rgba(2,8,13,.7), rgba(2,8,13,.7) calc(100% - 140px), rgba(2,8,13,0)); }
 }
 
-/* RSC logo: primary (navy) artwork, unaltered, on a white panel so it never sits on a palette colour or busy background.
-   Padding >= half the C-marque height (~17px at this size) keeps the required clear space. */
-.sponsor-logo { display: block; width: 200px; max-width: 70%; margin-top: 16px; padding: 18px 20px; background: #fff; border-radius: 10px; }
-.sponsor-logo img { display: block; width: 100%; height: auto; }
+/* Sponsor logos: unaltered artwork on a white panel (RSC guidelines: no palette-colour or busy backgrounds; clear space kept by padding) */
+.sponsor-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: 16px; padding: 14px 16px; background: #fff; border-radius: 10px; width: fit-content; max-width: 100%; }
+.sponsor-logos a { display: block; }
+.sponsor-logos img { display: block; height: 48px; width: auto; max-width: 100%; }
+.sponsor-logos a:nth-child(3) img { height: 36px; }
+@media (max-width: 560px) { .sponsor-logos { gap: 12px 18px; padding: 12px 14px; } .sponsor-logos img { height: 44px; } .sponsor-logos a:nth-child(3) img { height: 34px; } }

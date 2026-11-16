@@ -17,7 +17,7 @@ $event = [
     'title'     => 'SC&IS Silver Jubilee Symposium',
     'theme'     => 'Computational Science Across Scales',
     'start'     => '2026-11-27T09:00:00+05:30',
-    'abstract_deadline'     => '2026-11-15T23:59:00+05:30',
+    'abstract_deadline'     => '2026-11-18T23:59:00+05:30',
     'registration_deadline' => '2026-11-20T23:59:00+05:30',
     'register_url' => 'https://tinyurl.com/scis25jnu',
     'map_url'   => 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode('School of Computational and Integrative Sciences, Jawaharlal Nehru University, New Delhi 110067'),
