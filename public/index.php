@@ -44,7 +44,7 @@ $contacts = [
     ['role' => 'Co-convenor', 'name' => 'Arnab Bhattacharjee',   'email' => 'arnab@jnu.ac.in'],
 ];
 // Footer credit
-$credit = ['name' => 'Sougata Jana', 'url' => 'https://github.com/SougataJana', 'email' => 'sougataj1@gmail.com'];
+$credit = ['name' => 'Sougata Jana', 'url' => 'https://sougatajana.github.io/clover-card/', 'email' => 'sougataj1@gmail.com'];
 
 $sessions = Programme::sessions();
 $days     = Programme::days();
