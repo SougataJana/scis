@@ -1,7 +1,7 @@
 <section class="section about" id="about" data-scene="1">
   <div class="wrap narrow-left">
     <p class="eyebrow" data-reveal>01 · The code of life</p>
-    <h2 class="big" data-split>Twenty-five years of making science computable.</h2>
+    <h2 class="big" data-split>25 years of making science computable.</h2>
     <p class="body" data-reveal>
       The School of Computational and Integrative Sciences began as the School of Information Technology.
       From that first idea it has pushed a quantitative, interdisciplinary way of looking at living and non-living systems.
