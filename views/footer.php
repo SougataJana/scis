@@ -4,11 +4,12 @@
       <div>
         <h4><?= e($event['school']) ?></h4>
         <p><?= e($event['university']) ?><br>Founded as the School of Information Technology (SIT)</p>
-        <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU and the Royal Society of Chemistry.</p>
+        <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU, the Royal Society of Chemistry and the American Chemical Society.</p>
         <div class="sponsor-logos">
           <a href="https://dbtindia.gov.in" target="_blank" rel="noopener" aria-label="Department of Biotechnology, Government of India (DBT-Bioinformatics Center)"><img src="assets/img/dbt-logo.png" width="292" height="200" alt="Department of Biotechnology, Government of India" loading="lazy" decoding="async"></a>
           <a href="https://www.jnu.ac.in" target="_blank" rel="noopener" aria-label="School of Computational and Integrative Sciences, JNU"><img src="assets/img/jnu-logo.png" width="447" height="447" alt="SC&amp;IS, Jawaharlal Nehru University" loading="lazy" decoding="async"></a>
           <a href="https://www.rsc.org" target="_blank" rel="noopener" aria-label="Royal Society of Chemistry"><img src="assets/img/rsc-logo.svg" width="250" height="70" alt="Royal Society of Chemistry" loading="lazy" decoding="async"></a>
+          <a href="https://www.acs.org" target="_blank" rel="noopener" aria-label="American Chemical Society"><img src="assets/img/acs-logo.png" width="630" height="201" alt="American Chemical Society" loading="lazy" decoding="async"></a>
         </div>
       </div>
       <div>
