@@ -33,8 +33,15 @@
           <a class="inline-map-link" href="assets/docs/rsc-membership.pdf" target="_blank" rel="noopener">Membership flyer (PDF)</a>
         </p>
       </article>
+
+      <article class="sp-card glass sp-wide" data-reveal>
+        <a class="sp-logo dbt" href="https://dbtindia.gov.in" target="_blank" rel="noopener" aria-label="Department of Biotechnology, Government of India"><img src="assets/img/dbt-logo.png" width="292" height="200" alt="Department of Biotechnology, Government of India" loading="lazy" decoding="async"></a>
+        <p class="person-role">Sponsor</p>
+        <h3>DBT-Bioinformatics Center, SC&amp;IS, JNU</h3>
+        <p class="sp-text">Supported by the Department of Biotechnology, Government of India, through the DBT-Bioinformatics Center at the School of Computational &amp; Integrative Sciences, JNU.</p>
+      </article>
     </div>
 
-    <p class="sp-org" data-reveal>Organised by the School of Computational &amp; Integrative Sciences, JNU &nbsp;·&nbsp; Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU</p>
+    <p class="sp-org" data-reveal>Organised by the School of Computational &amp; Integrative Sciences, JNU</p>
   </div>
 </section>
