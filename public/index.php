@@ -88,6 +88,7 @@ require $root . '/views/hero.php';
 require $root . '/views/about.php';
 require $root . '/views/glance.php';
 require $root . '/views/programme.php';
+require $root . '/views/sponsors.php';
 require $root . '/views/contact.php';
 require $root . '/views/register.php';
 ?>

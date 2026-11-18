@@ -9,6 +9,7 @@
       <a href="#about">About</a>
       <a href="#glance">Details</a>
       <a href="#programme">Programme</a>
+      <a href="#sponsors">Sponsors</a>
       <a href="#contact">Contact</a>
       <a href="assets/img/flyer.jpg" target="_blank" rel="noopener">Flyer</a>
     </nav>

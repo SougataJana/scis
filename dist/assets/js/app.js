@@ -73,7 +73,7 @@ function startReveals() {
 /* =============================================================== HUD: scale read-out + section rail */
 const SECTIONS = {
   hero: ['Intro', '10⁻⁵ m', 'Cell'], about: ['About', '2 nm', 'DNA'], glance: ['Details', '10⁻⁸ m', 'Protein'],
-  programme: ['Programme', '10⁻⁶ m', 'Network'], contact: ['Contact', '1 m', 'People'], register: ['Register', '25 years', 'Join us'],
+  programme: ['Programme', '10⁻⁶ m', 'Network'], sponsors: ['Sponsors', '10⁻⁶ m', 'Network'], contact: ['Contact', '1 m', 'People'], register: ['Register', '25 years', 'Join us'],
 };
 const rail = $('#rail');
 rail.innerHTML = Object.keys(SECTIONS).filter((id) => $('#' + id)).map((id) => `<a href="#${id}" data-r="${id}" aria-label="${SECTIONS[id][0]}"><span>${SECTIONS[id][0]}</span></a>`).join('');
@@ -209,7 +209,7 @@ async function openSheet(id, x, y, focusIdx = -1) {
     <li class="talk${i === focusIdx ? ' hl' : ''}" data-open="${id}" data-talk="${i}" role="button" tabindex="0" aria-label="${esc(t.speaker)} — open abstract">
       <span class="avatar"><b>${esc(t.initials)}</b><u></u></span>
       <div><strong>${esc(t.speaker)}</strong><small>${esc(t.affiliation)}</small></div>
-      <div class="tmeta"><time>${esc(t.time)}</time><em>${t.keynote ? 'Keynote' : 'Short talk'} · ${esc(t.slot)}</em></div>
+      <div class="tmeta"><time>${esc(t.time)}</time><em>${esc(t.slot)}</em></div>
     </li>`).join('');
   sheet.style.setProperty('--h', s.hue);
   sheet.hidden = false; sheet.classList.remove('closing'); document.body.classList.add('lock'); sheet.scrollTop = 0;
@@ -251,7 +251,7 @@ async function openAbstract(id, idx, x, y) {
   const s = byId[id]; if (!s) return;
   const t = s.talks[idx]; if (!t) return;
   if (!sheetOpen || sheet.dataset.sid !== id) await openSheet(id, x, y);
-  fillAbstract(t.speaker, t.affiliation, `${t.time} · ${t.keynote ? 'Keynote' : 'Short talk'}`, t.title, t.abstract, s.hue, t.initials, t.authors, t.references);
+  fillAbstract(t.speaker, t.affiliation, t.time, t.title, t.abstract, s.hue, t.initials, t.authors, t.references);
   sheet.classList.add('view-abstract');
   $('#sheetAbstract').hidden = false;
 }

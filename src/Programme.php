@@ -162,7 +162,7 @@ final class Programme
                     $se('s3'),
                     $ev('15:50 – 16:20', 'Tea / Coffee break', 'tea'),
                     $se('s4'),
-                    $ev('18:05 – 19:30', 'Poster & networking session', 'poster', self::MEALS_VENUE),
+                    $ev('18:05 – 19:30', 'Poster & networking session', 'poster', self::MEALS_VENUE, 'Best Poster Prizes supported by ACS'),
                     $ev('19:30 onwards', 'Gala dinner', 'dinner', self::MEALS_VENUE, 'Informal reflections on the SC&IS journey'),
                 ],
             ],
