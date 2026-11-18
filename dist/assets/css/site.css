@@ -518,5 +518,10 @@ h1, h2, .hero .lede, .hero .sub { text-shadow: 0 2px 28px rgba(2, 8, 13, .65); }
 .sp-org { margin-top: 26px; color: var(--mute); font-size: 13.5px; }
 @media (max-width: 900px) { .sp-grid { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .sp-journals { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sp-j { height: 64px; } .sp-logo { height: 62px; } }
-.sp-wide { grid-column: 1 / -1; }
-.sp-logo.dbt { height: 84px; padding: 8px 16px; }
+.sp-wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 4px 22px; padding: 14px 22px; }
+.sp-wide .sp-logo { flex: none; margin: 0; }
+.sp-wide .sp-body { min-width: 0; }
+.sp-wide h3 { font-size: 1.1rem; }
+.sp-wide .sp-text { margin-top: 2px; font-size: 14.5px; max-width: none; }
+.sp-logo.dbt { height: 64px; padding: 6px 12px; }
+@media (max-width: 560px) { .sp-wide { flex-direction: column; align-items: flex-start; } }
