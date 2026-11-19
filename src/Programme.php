@@ -84,8 +84,8 @@ final class Programme
         return $cache = [
             new Session('s1', 1, 'Omics Science', '09:40 – 11:25', 'Dr. A. Krishnamachari & Dr. Pallavi Somvanshi', self::D1_VENUE, 175,
                 'Reading life at genome scale — single-cell, CRISPR and regulatory omics.', [
-                self::talk('09:40 – 10:10', 'Dr. Nagaraj Balasubramanian', 'IISER Pune'),
-                self::talk('10:10 – 10:40', 'Dr. Debojyoti Chakraborty', 'CSIR-IGIB'),
+                self::talk('09:40 – 10:10', 'Dr. Debojyoti Chakraborty', 'CSIR-IGIB'),
+                self::talk('10:10 – 10:40', 'Dr. Nagaraj Balasubramanian', 'IISER Pune'),
                 self::talk('10:40 – 11:10', 'Dr. Sumeet Pal Singh', 'SNU'),
                 self::talk('11:10 – 11:25', 'Dr. Rahul Gupta', 'University of Bristol', true),
             ]),
