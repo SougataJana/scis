@@ -525,3 +525,5 @@ h1, h2, .hero .lede, .hero .sub { text-shadow: 0 2px 28px rgba(2, 8, 13, .65); }
 .sp-wide .sp-text { margin-top: 2px; font-size: 14.5px; max-width: none; }
 .sp-logo.dbt { height: 64px; padding: 6px 12px; }
 @media (max-width: 560px) { .sp-wide { flex-direction: column; align-items: flex-start; } }
+.sp-logo.advent { height: 64px; padding: 6px 14px; }
+.sp-logo.advent img { max-width: 200px; }

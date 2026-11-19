@@ -41,6 +41,14 @@
           <p class="sp-text">Supported by the Department of Biotechnology, Government of India.</p>
         </div>
       </article>
+
+      <article class="sp-card glass sp-wide" data-reveal>
+        <a class="sp-logo advent" href="https://www.adventinformatics.com" target="_blank" rel="noopener" aria-label="Advent Informatics Pvt Ltd"><img src="assets/img/advent-logo.png" width="900" height="262" alt="Advent Informatics Pvt Ltd" loading="lazy" decoding="async"></a>
+        <div class="sp-body">
+          <h3>Advent Informatics Pvt Ltd</h3>
+          <p class="sp-text">Proud supporter of the SC&amp;IS Silver Jubilee Symposium.</p>
+        </div>
+      </article>
     </div>
 
     <p class="sp-org" data-reveal>Organised by the School of Computational &amp; Integrative Sciences, JNU</p>
