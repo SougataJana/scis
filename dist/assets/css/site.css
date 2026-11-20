@@ -527,3 +527,20 @@ h1, h2, .hero .lede, .hero .sub { text-shadow: 0 2px 28px rgba(2, 8, 13, .65); }
 @media (max-width: 560px) { .sp-wide { flex-direction: column; align-items: flex-start; } }
 .sp-logo.advent { height: 64px; padding: 6px 14px; }
 .sp-logo.advent img { max-width: 200px; }
+.e-industry { --m: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8h18v12H3zM9 8V4h6v4M3 14h18' fill='none' stroke='%23000' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.sp-trio { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.sp-trio .sp-card { align-items: flex-start; padding: 20px 22px; }
+.sp-trio .sp-logo { height: 64px; padding: 6px 14px; margin-bottom: 8px; }
+.sp-trio .sp-logo img { max-width: 100%; }
+.sp-trio h3 { font-size: 1.05rem; }
+.sp-trio .sp-text { font-size: 14px; }
+@media (max-width: 900px) { .sp-trio { grid-template-columns: 1fr; } }
+.sponsor-rows { display: grid; gap: 12px; margin-top: 16px; padding: 14px 16px; background: #fff; border-radius: 10px; width: fit-content; max-width: 100%; }
+.sponsor-rows .sponsor-logos { margin: 0; padding: 0; background: none; border-radius: 0; }
+.sponsor-rows .sponsor-logos a:nth-child(3) img { height: 48px; }
+.sponsor-rows .row3 img { height: 40px; }
+.sponsor-rows .sponsor-logos { flex-wrap: nowrap; gap: 14px; }
+.sponsor-rows .sponsor-logos img { height: 38px; max-width: none; flex: none; }
+.sponsor-rows .sponsor-logos a:nth-child(3) img { height: 30px; }
+.sponsor-rows .row3 img { height: 36px; }
+@media (max-width: 560px) { .sponsor-rows { padding: 12px; } .sponsor-rows .sponsor-logos { gap: 10px; } .sponsor-rows .sponsor-logos img { height: 30px; } .sponsor-rows .sponsor-logos a:nth-child(3) img { height: 24px; } .sponsor-rows .row3 img { height: 30px; } }

@@ -34,21 +34,23 @@
         </p>
       </article>
 
-      <article class="sp-card glass sp-wide" data-reveal>
-        <a class="sp-logo dbt" href="https://dbtindia.gov.in" target="_blank" rel="noopener" aria-label="Department of Biotechnology, Government of India"><img src="assets/img/dbt-logo.png" width="292" height="200" alt="Department of Biotechnology, Government of India" loading="lazy" decoding="async"></a>
-        <div class="sp-body">
+      <div class="sp-trio">
+        <article class="sp-card glass" data-reveal>
+          <a class="sp-logo dbt" href="https://dbtindia.gov.in" target="_blank" rel="noopener" aria-label="Department of Biotechnology, Government of India"><img src="assets/img/dbt-logo.png" width="292" height="200" alt="Department of Biotechnology, Government of India" loading="lazy" decoding="async"></a>
           <h3>DBT-Bioinformatics Center, SC&amp;IS, JNU</h3>
           <p class="sp-text">Supported by the Department of Biotechnology, Government of India.</p>
-        </div>
-      </article>
-
-      <article class="sp-card glass sp-wide" data-reveal>
-        <a class="sp-logo advent" href="https://www.adventinformatics.com" target="_blank" rel="noopener" aria-label="Advent Informatics Pvt Ltd"><img src="assets/img/advent-logo.png" width="900" height="262" alt="Advent Informatics Pvt Ltd" loading="lazy" decoding="async"></a>
-        <div class="sp-body">
+        </article>
+        <article class="sp-card glass" data-reveal>
+          <a class="sp-logo advent" href="https://www.adventinformatics.com" target="_blank" rel="noopener" aria-label="Advent Informatics Pvt Ltd"><img src="assets/img/advent-logo.png" width="900" height="262" alt="Advent Informatics Pvt Ltd" loading="lazy" decoding="async"></a>
           <h3>Advent Informatics Pvt Ltd</h3>
           <p class="sp-text">Proud supporter of the SC&amp;IS Silver Jubilee Symposium.</p>
-        </div>
-      </article>
+        </article>
+        <article class="sp-card glass" data-reveal>
+          <span class="sp-logo growdea"><img src="assets/img/growdea-logo.png" width="768" height="217" alt="GROWDEA Technologies — Grow An Idea!" loading="lazy" decoding="async"></span>
+          <h3>GROWDEA Technologies</h3>
+          <p class="sp-text">Industry partner. Presenting in the Industry Session on Day&nbsp;1.</p>
+        </article>
+      </div>
     </div>
 
     <p class="sp-org" data-reveal>Organised by the School of Computational &amp; Integrative Sciences, JNU</p>
