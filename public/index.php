@@ -63,18 +63,17 @@ $asset = static fn(string $p): string => 'assets/' . $p . '?v=' . (string) @file
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title><?= e($event['title']) ?> · JNU · 27–28 Nov 2026</title>
 <meta name="description" content="<?= e($event['theme']) ?> — 25 years of the School of Computational and Integrative Sciences, JNU. 27–28 November 2026.">
-<meta name="theme-color" content="#02080d">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2302080d' stroke='%235fe3f0' stroke-width='2'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='13' font-weight='700' fill='%235fe3f0' font-family='sans-serif'%3E25%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0b1220">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%230b1220' stroke='%23c9d1d9' stroke-width='2'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='13' font-weight='700' fill='%23c9d1d9' font-family='sans-serif'%3E25%3C/text%3E%3C/svg%3E">
 <script type="importmap">{"imports":{"three":"./assets/js/vendor/three/three.module.js","three/addons/":"./assets/js/vendor/three/addons/"}}</script>
 <link rel="modulepreload" href="./assets/js/vendor/three/three.module.js">
 <link rel="modulepreload" href="<?= e($asset('js/gl/stage.js')) ?>">
+<link rel="preload" href="assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="<?= e($asset('css/site.css')) ?>">
 </head>
 <body>
-<div class="loader" id="loader" aria-hidden="true"><svg viewBox="0 0 80 80" width="84" height="84"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(95,227,240,.16)" stroke-width="2"/><circle class="loader-arc" cx="40" cy="40" r="34" fill="none" stroke="#5fe3f0" stroke-width="2" stroke-linecap="round" stroke-dasharray="60 154"/><text x="40" y="49" text-anchor="middle" font-size="26" font-weight="700" fill="#eaf8fb" font-family="Space Grotesk, sans-serif">25</text></svg><p>SC&amp;IS · JNU</p></div>
+<div class="loader" id="loader" aria-hidden="true"><svg viewBox="0 0 80 80" width="84" height="84"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(201,209,217,.16)" stroke-width="2"/><circle class="loader-arc" cx="40" cy="40" r="34" fill="none" stroke="#c9d1d9" stroke-width="2" stroke-linecap="round" stroke-dasharray="60 154"/><text x="40" y="49" text-anchor="middle" font-size="26" font-weight="700" fill="#e8ecf1" font-family="Fraunces, Georgia, serif">25</text></svg><p>SC&amp;IS · JNU</p></div>
 <canvas id="stage" aria-hidden="true"></canvas>
 <div class="vignette" aria-hidden="true"></div>
 <canvas id="fx" aria-hidden="true"></canvas>

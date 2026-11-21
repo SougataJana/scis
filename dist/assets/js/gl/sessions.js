@@ -405,7 +405,7 @@ export class SessionViewer {
   constructor(canvas) {
     this.canvas = canvas; this.running = false; this.cur = null;
     this.renderer = makeRenderer(canvas); this.renderer.toneMappingExposure = .78;
-    this.scene = new THREE.Scene(); this.scene.background = new THREE.Color(0x02080d);
+    this.scene = new THREE.Scene(); this.scene.background = new THREE.Color(0x0b1220);
     this.camera = new THREE.PerspectiveCamera(40, 1, .05, 100); this.camera.position.set(0, 0, 8.4);
     addRig(this.scene);
     const { composer, bloom } = makeComposer(this.renderer, this.scene, this.camera, { strength: .5, radius: .55, threshold: .62 });

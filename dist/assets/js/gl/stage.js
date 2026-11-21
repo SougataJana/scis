@@ -5,8 +5,8 @@ import * as bio from './bio.js';
 export function createStage(canvas) {
   const renderer = makeRenderer(canvas);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x02080d);
-  scene.fog = new THREE.FogExp2(0x02080d, .016);
+  scene.background = new THREE.Color(0x0b1220);
+  scene.fog = new THREE.FogExp2(0x0b1220, .016);
   const camera = new THREE.PerspectiveCamera(42, 1, .05, 400);
   addRig(scene);
   const { composer, bloom } = makeComposer(renderer, scene, camera, { strength: LOW ? .55 : .8, radius: .7, threshold: .2 });
