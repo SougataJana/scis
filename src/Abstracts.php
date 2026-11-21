@@ -217,6 +217,12 @@ Keywords: Stress combinations; SCIPDb; CoStressNet; artificial neural networks; 
             'abstract' => 'Accurate and timely medical assessment is central to effective healthcare delivery, yet complex clinical data and high diagnostic workloads can make automated analysis challenging. Our presented pipeline model explores how hybrid artificial intelligence, integrating transfer learning with classical machine learning classifiers, supports robust pattern recognition and classification in medical imaging. We discuss core design considerations, including data balancing, regularization, and validation, and consider how AI-assisted tools can act as a dependable second opinion for practitioners. Finally, we touch upon the broader potential of transferable AI frameworks across varied clinical and diagnostic environments.',
             'references' => null,
         ],
+        'Dr. Manish Dev Shrimali' => [
+            'title' => 'Tipping cascades in complex networks',
+            'authors' => null,
+            'abstract' => 'Tipping points are critical thresholds at which small changes can cause sudden and large shifts in the behaviour of complex systems. Many real-world systems, such as ecological systems and infrastructure networks, consist of interacting units that can exist in different stable states. In this talk, we explore how pairwise and higher-order interactions influence the spread of tipping cascades in such complex networks. We also examine how interaction strengths affect cascade formation in complex networks and use bifurcation diagrams to understand the transition process. These results highlight the important role of interaction patterns and strengths in shaping tipping cascades and provide insights into understanding and managing sudden transitions in ecological, climate, social, and technological systems.',
+            'references' => null,
+        ],
     ];
 
     /** @return array{title:string, authors:?string, abstract:string, references:?list<string>}|null */
