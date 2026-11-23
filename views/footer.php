@@ -4,7 +4,7 @@
       <div>
         <h4><?= e($event['school']) ?></h4>
         <p><?= e($event['university']) ?><br>Founded as the School of Information Technology (SIT)</p>
-        <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU, the Royal Society of Chemistry, the American Chemical Society, Advent Informatics Pvt Ltd and GROWDEA Technologies.</p>
+        <p class="small">Sponsored by the DBT-Bioinformatics Center, SC&amp;IS, JNU, the Royal Society of Chemistry, the American Chemical Society, Advent Informatics Pvt Ltd, GROWDEA Technologies and Zastra Innovations.</p>
         <div class="sponsor-rows">
           <div class="sponsor-logos">
           <a href="https://dbtindia.gov.in" target="_blank" rel="noopener" aria-label="Department of Biotechnology, Government of India (DBT-Bioinformatics Center)"><img src="assets/img/dbt-logo.png" width="292" height="200" alt="Department of Biotechnology, Government of India" loading="lazy" decoding="async"></a>
@@ -17,6 +17,7 @@
           </div>
           <div class="sponsor-logos row3">
           <img src="assets/img/growdea-logo.png" width="768" height="217" alt="GROWDEA Technologies" loading="lazy" decoding="async">
+          <img src="assets/img/zastra-logo.png" width="846" height="202" alt="Zastra Innovations" loading="lazy" decoding="async">
           </div>
         </div>
       </div>

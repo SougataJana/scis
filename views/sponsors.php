@@ -50,6 +50,11 @@
           <h3>GROWDEA Technologies</h3>
           <p class="sp-text">Industry partner. Presenting in the Industry Session on Day&nbsp;1.</p>
         </article>
+        <article class="sp-card glass" data-reveal>
+          <span class="sp-logo zastra"><img src="assets/img/zastra-logo.png" width="846" height="202" alt="Zastra Innovations — solutions to innovate" loading="lazy" decoding="async"></span>
+          <h3>Zastra Innovations</h3>
+          <p class="sp-text">Proud supporter of the SC&amp;IS Silver Jubilee Symposium.</p>
+        </article>
       </div>
     </div>
 
