@@ -223,6 +223,12 @@ Keywords: Stress combinations; SCIPDb; CoStressNet; artificial neural networks; 
             'abstract' => 'Tipping points are critical thresholds at which small changes can cause sudden and large shifts in the behaviour of complex systems. Many real-world systems, such as ecological systems and infrastructure networks, consist of interacting units that can exist in different stable states. In this talk, we explore how pairwise and higher-order interactions influence the spread of tipping cascades in such complex networks. We also examine how interaction strengths affect cascade formation in complex networks and use bifurcation diagrams to understand the transition process. These results highlight the important role of interaction patterns and strengths in shaping tipping cascades and provide insights into understanding and managing sudden transitions in ecological, climate, social, and technological systems.',
             'references' => null,
         ],
+        'Dr. Tavpritesh Sethi' => [
+            'title' => 'Building Real World AI Solutions for Infectious Disease Preparedness in Hospital and Public Health Settings',
+            'authors' => null,
+            'abstract' => 'In this talk I will present our work on SAFE-ICU, a real-world AI solution for predicting physiological deterioration that has been validated in more than 200 ICUs. The second part of the talk will focus on antimicrobial resistance and building evidence based antimicrobial stewardship platforms for hospitals and community settings. Finally I will end the talk with highlighting some of the key emerging challenges and opportunities in computational biology and AI for healthcare.',
+            'references' => null,
+        ],
     ];
 
     /** @return array{title:string, authors:?string, abstract:string, references:?list<string>}|null */
