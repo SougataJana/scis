@@ -117,7 +117,7 @@ final class Programme
                 self::talk('10:30 – 11:00', 'Dr. Soham Ray', 'ICAR-IARI'),
                 self::talk('11:00 – 11:15', 'Dr. Rishav Sahil', 'BHU', true),
             ]),
-            new Session('s6', 6, 'Complex Systems in Biology', '11:30 – 13:15', 'To be confirmed', self::D2_VENUE, 330,
+            new Session('s6', 6, 'Complex Systems in Biology', '11:30 – 13:15', 'Dr. R. K. Brojen Singh', self::D2_VENUE, 330,
                 'Networks, emergence and the physics of living systems.', [
                 self::talk('11:30 – 12:00', 'Dr. Samrat Chatterjee', 'THSTI'),
                 self::talk('12:00 – 12:30', 'Dr. Areejit Samal', 'IMSc, Chennai'),
