@@ -229,6 +229,19 @@ Keywords: Stress combinations; SCIPDb; CoStressNet; artificial neural networks; 
             'abstract' => 'In this talk I will present our work on SAFE-ICU, a real-world AI solution for predicting physiological deterioration that has been validated in more than 200 ICUs. The second part of the talk will focus on antimicrobial resistance and building evidence based antimicrobial stewardship platforms for hospitals and community settings. Finally I will end the talk with highlighting some of the key emerging challenges and opportunities in computational biology and AI for healthcare.',
             'references' => null,
         ],
+        'Dr. S. Senthil Kumaran' => [
+            'title' => 'Studying neurodegeneration through deep learning on Magnetic Resonance Imaging data',
+            'authors' => 'Sadhana Kumari<sup>1</sup>,  Pankaj<sup>1</sup>, Priyanka Bhat<sup>1</sup>, RK Agrawal<sup>2</sup>, Bharti<sup>3</sup>, Achal K Srivastava<sup>4</sup>, Vinay Goyal<sup>4</sup>, Roopa Rajan<sup>4</sup>, S Senthil Kumaran<sup>1</sup>
+Departments of <sup>1</sup>NMR and <sup>4</sup>Neurology, All India Institute of Medical Sciences, New Delhi
+<sup>2</sup>School of Computational and Integrative Sciences, JNU
+<sup>3</sup>School of Computer Science, Delhi University',
+            'abstract' => 'With progressive neuronal loss, neurodegenerative diseases (Alzheimer’s disease, Parkinson’s disease, etc.,) constitute a major challenge in early detection. Spinocerebellar ataxias (SCA) involves cerebellar degeneration. Almost all of them involve network disruption at varied levels. Neuroimaging is a promising modality for quantitative imaging and parameter estimation to detect subtle early changes or monitor the progression.
+
+Studying the white matter lesions/ alterations or grey matter decline using deep learning architectures from imaging data has opened up the avenues to understand the neurobiological basis in these diseases. Models analyze T1-weighted MRI and other scans to quantify brain volume, gray matter density, and cortical thickness, detecting subtle atrophy patterns that precede overt clinical decline.
+
+With our collaboration with School of Computational and Integrative Sciences, JNU, we have been able to progress in using ML/DL models on structural and functional MRI, and metabolomics. This has given us the confidence to study the early biomarkers from integrated data, and understand the mechanisms of the disease and its progression in Parkinson’s disease and SCA.',
+            'references' => null,
+        ],
     ];
 
     /** @return array{title:string, authors:?string, abstract:string, references:?list<string>}|null */
