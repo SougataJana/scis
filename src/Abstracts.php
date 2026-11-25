@@ -233,7 +233,7 @@ Keywords: Stress combinations; SCIPDb; CoStressNet; artificial neural networks; 
             'title' => 'Studying neurodegeneration through deep learning on Magnetic Resonance Imaging data',
             'authors' => 'Sadhana Kumari<sup>1</sup>,  Pankaj<sup>1</sup>, Priyanka Bhat<sup>1</sup>, RK Agrawal<sup>2</sup>, Bharti<sup>3</sup>, Achal K Srivastava<sup>4</sup>, Vinay Goyal<sup>4</sup>, Roopa Rajan<sup>4</sup>, S Senthil Kumaran<sup>1</sup>
 Departments of <sup>1</sup>NMR and <sup>4</sup>Neurology, All India Institute of Medical Sciences, New Delhi
-<sup>2</sup>School of Computational and Integrative Sciences, JNU
+<sup>2</sup>School of Computer and Systems Sciences, JNU
 <sup>3</sup>School of Computer Science, Delhi University',
             'abstract' => 'With progressive neuronal loss, neurodegenerative diseases (Alzheimer’s disease, Parkinson’s disease, etc.,) constitute a major challenge in early detection. Spinocerebellar ataxias (SCA) involves cerebellar degeneration. Almost all of them involve network disruption at varied levels. Neuroimaging is a promising modality for quantitative imaging and parameter estimation to detect subtle early changes or monitor the progression.
 
