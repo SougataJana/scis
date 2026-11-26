@@ -44,8 +44,10 @@ main, footer, .nav { position: relative; z-index: 2; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--teal); font: 500 14px var(--ui); letter-spacing: .02em; white-space: nowrap; }
 .brand b { color: var(--ink); font-weight: 600; }
 .links { display: flex; gap: 2px; }
-.links a { padding: 8px 14px; border-radius: 6px; font-size: 13.5px; color: var(--mute); transition: color .25s, background .25s; }
+.links a { white-space: nowrap; padding: 8px 14px; border-radius: 6px; font-size: 13.5px; color: var(--mute); transition: color .25s, background .25s; }
 .links a:hover, .links a.active { color: var(--ink); background: rgba(201, 209, 217, .1); }
+@media (max-width: 1180px) { .links a { padding: 8px 9px; font-size: 13px; } .nav-pill { padding-left: 12px; } .brand span { font-size: 13px; } }
+@media (max-width: 1060px) { .nav .idbar-gov { display: none; } }
 @media (max-width: 860px) { .links { display: none; } .brand span { font-size: 13px; } }
 
 /* buttons */

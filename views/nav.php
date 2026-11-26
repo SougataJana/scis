@@ -12,6 +12,7 @@
       <a href="#sponsors">Sponsors</a>
       <a href="#contact">Contact</a>
       <a href="assets/img/flyer.jpg" target="_blank" rel="noopener">Flyer</a>
+      <a href="assets/docs/scis25-abstract-booklet.pdf" target="_blank" rel="noopener">Abstract Book</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
     <a class="btn primary sm" href="#register"><span>Register</span></a>
