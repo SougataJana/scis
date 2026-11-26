@@ -41,7 +41,7 @@
           <div class="panel-ico" data-specimen="when" aria-hidden="true"></div>
           <div>
             <h3>Fri 27 &amp; Sat 28 November 2026</h3>
-            <p>Day 1 opens at 09:00 with registration and inaugural remarks and closes with posters and a gala dinner. Day 2 runs 09:30 – 16:30 and ends with the valedictory session and poster awards.</p>
+            <p>Day 1 opens at 09:00 with registration and inaugural remarks and closes with posters and dinner. Day 2 runs 09:30 – 16:30 and ends with the valedictory session and poster awards.</p>
             <ul class="facts">
               <li><b>18 Nov</b><span>Abstract submission deadline</span></li>
               <li><b>20 Nov</b><span>Registration deadline</span></li>
@@ -57,7 +57,7 @@
             <h3><?= e($event['university']) ?></h3>
             <ul class="facts wide">
               <li><b>Day 1 &amp; 2 — sessions</b><span><a class="inline-map-link" href="<?= e($event['saa_map_url']) ?>" target="_blank" rel="noopener">SC&amp;SS Seminar Hall, JNU</a><br>Registration, talks &amp; tea</span></li>
-              <li><b>Lunch &amp; dinner</b><span>SC&amp;IS<br>Lunch on both days · Day 1 evening: poster session &amp; gala dinner</span></li>
+              <li><b>Lunch &amp; dinner</b><span>SC&amp;IS<br>Lunch on both days · Day 1 evening: poster session &amp; dinner</span></li>
             </ul>
             <a class="loc-pin" href="<?= e($event['map_url']) ?>" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>

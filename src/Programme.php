@@ -103,7 +103,7 @@ final class Programme
                 self::talk('15:20 – 15:35', 'Dr. Kuldeep Singh Yadav', 'MANIT Bhopal', true),
                 self::talk('15:35 – 15:50', 'Dr. Saurabh Sharma', 'SC&SS, JNU', true),
             ]),
-            new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar Ahmad, Dr. Rakesh Pandey & Dr. Jyoti Singh Kirar', self::D1_VENUE, 198,
+            new Session('s4', 4, 'Artificial Intelligence in Computational Biology', '16:20 – 18:05', 'Dr. Shandar Ahmad, Dr. Rakesh Kumar Saroj & Dr. Jyoti Singh Kirar', self::D1_VENUE, 198,
                 'Learning from biological data — models that predict, design and explain.', [
                 self::talk('16:20 – 16:50', 'Dr. Vivek Tiwari', 'IISER Berhampur'),
                 self::talk('16:50 – 17:20', 'Dr. Tavpritesh Sethi', 'IIIT Delhi'),
@@ -164,7 +164,7 @@ final class Programme
                     $se('s4'),
                     $ev('18:05 – 18:15', 'Industry session: presentation by GROWDEA Technologies', 'industry', self::D1_VENUE),
                     $ev('18:15 – 19:30', 'Poster & networking session', 'poster', self::MEALS_VENUE, 'Best Poster Prizes supported by ACS'),
-                    $ev('19:30 onwards', 'Gala dinner', 'dinner', self::MEALS_VENUE, 'Informal reflections on the SC&IS journey'),
+                    $ev('19:30 onwards', 'Dinner', 'dinner', self::MEALS_VENUE, 'Informal reflections on the SC&IS journey'),
                 ],
             ],
             [
